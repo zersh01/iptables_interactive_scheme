@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+
+   <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+   <div id="container">
+      <div id="left">
+         <button id="button1" onclick="buttonClicked(this)">Транзитный трафик</button>
+         <button id="button2" onclick="buttonClicked(this)">Локальным приложениям</button>
+      </div>
+      <div id="middle">
+         <div class="svg-container"><!-- SVG контейнер будет здесь --></div>
+      </div>
+      <div id="right">
+         <h2>Information</h2>
+      </div>
+   </div>
+   
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+   <script>
+    function buttonClicked(button) {
+       button.classList.toggle('clicked');
+    }
+
+      $(document).ready(function () {
+         function changeOpacity(elementId) {
+            var $element = $('#' + elementId);
+            var previousOpacity = $element.css('opacity');
+      
+            if (previousOpacity === '0.5') {
+               // Восстанавливаем предыдущее значение
+               $element.css('opacity', '0');
+            } else {
+               // Устанавливаем новое значение
+               $element.css('opacity', '0.5');
+            }
+         }
+	    function changeStrokeColor(elementId, color) {
+	       var $element = $('#' + elementId);
+	       var previousColor = $element.data('previous-color');
+
+	       if (previousColor) {
+	          $element.css('stroke', previousColor);
+	          $element.removeData('previous-color');
+	       } else {
+	          $element.data('previous-color', $element.css('stroke'));
+	          $element.css('stroke', color);
+	       }
+	    }
+
+	    function changeStrokeWidth(elementId) {
+	       var $element = $('#' + elementId);
+	       var previousStrokeWidth = $element.css('stroke-width');
+
+	       if (previousStrokeWidth === '1px') {
+	          // Восстанавливаем предыдущее значение
+	          $element.css('stroke-width', '0.248026');
+	       } else {
+	          // Устанавливаем новое значение
+	          $element.css('stroke-width', '1px');
+	       }
+	    }
+      
+         $.get("image.svg", function (data) {
+            var $svg = $(data).find('svg');
+            var paths = $svg.find('path');
+      
+            paths.each(function (index) {
+               var dataValue = $(this).attr('data');
+               $(this).attr('data-toggle', 'tooltip');
+               $(this).attr('data-placement', 'top'); 
+               $(this).attr('title', dataValue);
+            });
+      
+            $('.svg-container').replaceWith($svg);
+      
+            $('[data-toggle="tooltip"]').tooltip({
+               trigger: 'hover', 
+               container: 'body',
+               placement: 'top', 
+               html: true, 
+               boundary: 'viewport' 
+            });
+      
+            $('[data-toggle="tooltip"]').on('mousemove', function(e) {
+               var mouseX = e.clientX,
+               mouseY = e.clientY;
+      
+               $('.tooltip').css({
+               top: mouseY - 20, 
+               left: mouseX + 10 
+               });
+            });
+         }, 'xml');
+      
+         $('#left button').on('click', function() {
+	    if ($(this).is(':first-child')) {
+               changeOpacity('path870-5-1');
+               changeOpacity('path870-2-8');
+               changeOpacity('path870-7-9');
+               changeOpacity('path2968');
+               changeOpacity('path2625');
+               changeOpacity('path2643');
+               changeOpacity('path870-2-0');
+               changeOpacity('path870-3-75');
+               changeOpacity('path870-5-9-23');
+               changeOpacity('path870-22');
+
+		//Color arrow
+	       changeStrokeColor('path46227', 'red');
+	       changeStrokeColor('path52951', 'red');
+	       changeStrokeColor('path46283', 'red');
+	      //Prerouting/Forward/Postrouting/ bold
+	      changeStrokeWidth('rect167');
+	      changeStrokeWidth('rect167-5-6');
+	      changeStrokeWidth('rect167-5-0');
+            } else {
+               changeOpacity('path870-5-9');
+               changeOpacity('path870-2');
+               changeOpacity('path2635');
+		//Color arrow
+	       changeStrokeColor('path42369-7', 'red');
+	       changeStrokeColor('path46403', 'red');
+	       changeStrokeColor('path46403-2', 'red');
+	       changeStrokeColor('path49110', 'red');
+	       changeStrokeColor('path49110-7', 'red');
+	       changeStrokeColor('path49110-7-3', 'red');
+	       changeStrokeColor('path49110-7-3-8', 'red');
+	       changeStrokeColor('path49110-7-3-84', 'red');
+	       changeStrokeColor('path49110-7-3-4', 'red');
+
+		//Input/Output/LocalProc bold
+		changeStrokeWidth('rect167-5');
+		changeStrokeWidth('rect167-2');
+		changeStrokeWidth('rect165-6');
+	      changeStrokeWidth('rect167');
+	      changeStrokeWidth('rect167-5-0');
+
+            }
+         });
+      });
+   </script>
+</body>
+</html>

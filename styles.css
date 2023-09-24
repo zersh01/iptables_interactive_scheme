@@ -1,0 +1,70 @@
+/* Не кэшировать стили */
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+
+#left,
+#middle,
+#right {
+    flex: 1;
+}
+
+#left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightblue;
+}
+
+#middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgreen;
+}
+
+#right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightyellow;
+}
+
+#button1, #button2 {
+   width: 150px; /* Установите нужную ширину кнопок */
+   height: 50px; /* Установите нужную высоту кнопок */
+   border-radius: 25px; /* Установите половину высоты кнопок, чтобы получить овальную форму */
+}
+
+.tooltip {
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -100%); 
+    max-width: 200px;
+}
+
+/* style.css */
+.clicked {
+   background-color: lightblue; 
+}
