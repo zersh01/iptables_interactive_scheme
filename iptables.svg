@@ -25,7 +25,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.52"
-     inkscape:cx="287.5"
+     inkscape:cx="314.47368"
      inkscape:cy="381.25"
      inkscape:window-width="1920"
      inkscape:window-height="1032"
@@ -866,13 +866,13 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="155.21199"
+       x="156.27031"
        y="108.28826"
        id="text53373"><tspan
          sodipodi:role="line"
          id="tspan53371"
          style="font-size:7.05556px;stroke-width:0.264583"
-         x="155.21199"
+         x="156.27031"
          y="108.28826">FORWARD</tspan></text>
     <text
        xml:space="preserve"
@@ -931,113 +931,115 @@
      inkscape:label="Слой 2"
      style="display:inline">
     <path
-       style="fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0"
+       style="display:inline;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0"
        d="m 58.86197,57.271438 0.13476,13.075081 18.690042,0.04693 -0.05678,-13.143277 z"
        id="path870"
        inkscape:label="p-raw"
-       data="предназначена для обработки пакетов прежде, чем они будут переданы системе conntrack"
-       description="Таблица &lt;strong&gt;raw&lt;/strong&gt; &lt;br&gt;Предназначена для выполнения действий с пакетами до их обработки системой conntrack.&lt;br&gt;&lt;br&gt;
-Цепочки:&lt;br&gt;&lt;strong&gt;PREROUTING&lt;/strong&gt; — в эту цепочку входящие пакеты попадают раньше, чем в любую другую из цепочек iptables, и до обработки их системой conntrack.&lt;br&gt;&lt;strong&gt;OUTPUT&lt;/strong&gt; — аналогично для пакетов, сгенерированных самим хостом.&lt;br&gt;&lt;br&gt;Действия&lt;br&gt;&lt;strong&gt;NOTRACK&lt;/strong&gt; -  позволяет предотвратить обработку пакетов системой conntrack&lt;br&gt;
-&lt;strong&gt;CT&lt;/strong&gt; - более функциональный инструмент. включает поддержку опций: --notrack, --helper, --ctevents,  --zone &lt;br&gt;
-&lt;strong&gt;RAWDNAT&lt;/strong&gt; — позволяет выполнять «проброс» адресов и портов «сырым» методом&lt;br&gt;&lt;br&gt;" />
+       data="Предназначена для обработки пакетов прежде, чем они будут переданы системе conntrack"
+       description="Таблица &lt;strong&gt;raw&lt;/strong&gt;, предназначена для выполнения действий с пакетами до их обработки системой conntrack.&lt;br&gt; Доступны следующие действия&lt;br&gt;&lt;br&gt; &lt;ul&gt;&lt;strong&gt;NOTRACK&lt;/strong&gt; -  позволяет предотвратить обработку пакетов системой conntrack&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;CT&lt;/strong&gt; - более функциональный инструмент. включает поддержку опций: --notrack, --helper, --ctevents,  --zone &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;RAWDNAT&lt;/strong&gt; — позволяет выполнять «проброс» адресов и портов «сырым» методом&lt;/ul&gt;" />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 218.80409,143.74593 0.13476,13.07508 18.69005,0.0469 -0.0568,-13.14327 z"
        id="path870-22"
        inkscape:label="o-raw"
-       data="предназначена для обработки пакетов прежде, чем они будут переданы системе conntrack, которая занимается отслеживанием состояния соединений и принадлежностью пакетов этим соединениям. Содержит встроенные цепочки PREROUTING и OUTPUT." />
+       data="Предназначена для обработки пакетов прежде, чем они будут переданы системе conntrack, которая занимается отслеживанием состояния соединений и принадлежностью пакетов этим соединениям"
+       description="См. raw цепочки prerouting" />
     <path
        style="display:inline;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0"
        d="m 84.331273,57.298562 0.13476,13.075081 18.690037,0.04693 -0.0568,-13.143277 z"
        id="path870-7"
        inkscape:label="p-ct"
        data="Отслеживание состояний соединений"
-       description="Используется conntrack - компонент netfilter, обеспечивающий отслеживание состояния соединений и классификацию пакетов с точки зрения принадлежности к соединениям, что позволяет netfilter осуществлять полноценную stateful-фильтрацию трафика. Как и netfilter, система conntrack является частью ядра Linux. &lt;br&gt;&lt;br&gt;Задачи:&lt;br&gt;
-
-&lt;ul&gt;Отслеживание состояний отдельных соединений с тем, чтобы классифицировать каждый пакет либо как относящийся к уже установленному соединению, либо как открывающий новое соединение. При этом понятие «состояние соединения» искусственно вводится для протоколов, в которых оно изначально отсутствует (UDP, ICMP). При работе же с протоколами, поддерживающими состояния (например, TCP), conntrack активно использует эту возможность, тесно взаимодействуя с базовой сетевой подсистемой ядра Linux.&lt;/ul&gt;
-&lt;ul&gt;Отслеживание связанных соединений, например, ICMP-ответов на TCP и UDP-пакеты. Более сложный вариант — протоколы, использующие несколько соединений в одной сессии, например, FTP. Для правильной обработки таких протоколов conntrack использует специальные модули (conntrack helpers), которые анализируют трафик и «выхватывают» информацию протокола о новых соединениях (например, порт, на который оно будет открыто), что позволяет обеспечить их корректную фильтрацию, маршрутизацию, шейпинг и пропускание через NAT.&lt;/ul&gt;&lt;br&gt;
-Для взаимодействия с системой conntrack из userspace разработан комплект conntrack-tools, содержащий две утилиты:
-
-&lt;ul&gt;&lt;strong&gt;conntrack&lt;/strong&gt; — инструмент, позволяющий системному администратору наблюдать таблицы состояний соединений и взаимодействовать с ними: очищать таблицы целиком, удалять отдельные записи, маркировать соединения вручную (аналог действия CONNMARK), устанавливать тайм-ауты соединений. Поддерживается фильтрация вывода (например, на основании адресов и/или портов источника и/или назначения), а также вывод в различных форматах, включая XML. Кроме того, данная утилита позволяет отслеживать в реальном времени события системы conntrack, например, открытие новых соединений или изменение состояния существующих.&lt;/ul&gt;
-&lt;ul&gt;&lt;strong&gt;conntrackd&lt;/strong&gt; — демон, обеспечивающий синхронизацию таблиц состояний с другими хостами, что в сочетании с возможностями демона keepalived позволяет создавать фаерволы на кластерах высокой доступности (High Availability) — при выходе из строя одного из хостов кластера его соединения будут «подхвачены» другими хостами кластера и корректно обработаны с учетом состояний. Также conntrackd можно использовать просто для удаленного сбора статистики по соединениям.&lt;/ul&gt;
-" />
+       description="Используется &lt;strong&gt;conntrack&lt;/strong&gt; - компонент netfilter, обеспечивающий отслеживание состояния соединений и классификацию пакетов с точки зрения принадлежности к соединениям, что позволяет netfilter осуществлять полноценную stateful-фильтрацию трафика. Как и netfilter, система conntrack является частью ядра Linux. &lt;br&gt;&lt;br&gt;Задачи:&lt;br&gt;  &lt;ul&gt;Отслеживание состояний отдельных соединений с тем, чтобы классифицировать каждый пакет либо как относящийся к уже установленному соединению, либо как открывающий новое соединение. При этом понятие «состояние соединения» искусственно вводится для протоколов, в которых оно изначально отсутствует (UDP, ICMP). При работе же с протоколами, поддерживающими состояния (например, TCP), conntrack активно использует эту возможность, тесно взаимодействуя с базовой сетевой подсистемой ядра Linux.&lt;/ul&gt; &lt;ul&gt;Отслеживание связанных соединений, например, ICMP-ответов на TCP и UDP-пакеты. Более сложный вариант — протоколы, использующие несколько соединений в одной сессии, например, FTP. Для правильной обработки таких протоколов conntrack использует специальные модули (conntrack helpers), которые анализируют трафик и «выхватывают» информацию протокола о новых соединениях (например, порт, на который оно будет открыто), что позволяет обеспечить их корректную фильтрацию, маршрутизацию, шейпинг и пропускание через NAT.&lt;/ul&gt;&lt;br&gt; Для взаимодействия с системой conntrack из userspace разработан комплект conntrack-tools, содержащий две утилиты:  &lt;ul&gt;&lt;strong&gt;conntrack&lt;/strong&gt; — инструмент, позволяющий системному администратору наблюдать таблицы состояний соединений и взаимодействовать с ними: очищать таблицы целиком, удалять отдельные записи, маркировать соединения вручную (аналог действия CONNMARK), устанавливать тайм-ауты соединений. Поддерживается фильтрация вывода (например, на основании адресов и/или портов источника и/или назначения), а также вывод в различных форматах, включая XML. Кроме того, данная утилита позволяет отслеживать в реальном времени события системы conntrack, например, открытие новых соединений или изменение состояния существующих.&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;conntrackd&lt;/strong&gt; — демон, обеспечивающий синхронизацию таблиц состояний с другими хостами, что в сочетании с возможностями демона keepalived позволяет создавать фаерволы на кластерах высокой доступности (High Availability) — при выходе из строя одного из хостов кластера его соединения будут «подхвачены» другими хостами кластера и корректно обработаны с учетом состояний. Также conntrackd можно использовать просто для удаленного сбора статистики по соединениям.&lt;/ul&gt; " />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 195.38794,143.90186 0.13476,13.07508 18.69004,0.0469 -0.0568,-13.14328 z"
        id="path870-7-9"
        inkscape:label="o-ct"
-       data="Отслеживание состояний соединений" />
+       data="Отслеживание состояний соединений"
+       description="Позволяет выполнять все теже действия что и таблица CT в цепочке PREROUTING, но для исходящих соединений" />
     <path
        style="display:inline;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0"
        d="m 108.70828,57.405235 0.13476,13.075081 18.69004,0.04693 -0.0568,-13.143277 z"
        id="path870-5"
        inkscape:label="p-mangle"
-       data="используется для модификации некоторых заголовков (TTL, TOS) и маркировке пакетов и соединений" />
+       data="Используется для модификации некоторых заголовков (TTL, TOS) и маркировке пакетов и соединений"
+       description="Таблица &lt;strong&gt;mangle&lt;/strong&gt; в цепочке &lt;strong&gt;PREROUTING&lt;/strong&gt; - позволяет модифицировать пакет до принятия решения о маршрутизации.&lt;br&gt;&lt;br&gt;   В таблице mangle цепочки PREROUTING доступны следующие действия:&lt;br&gt;&lt;br&gt;  &lt;ul&gt;&lt;strong&gt;TOS&lt;/strong&gt; - Устанавливает значение поля Type of Service в заголовке IP пакета.&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;TTL&lt;/strong&gt; - Устанавливает значение Time to Live в заголовке IP пакета.&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;HL&lt;/strong&gt; — изменяет поле Hop Limit в заголовке IPv6-пакета. Является аналогом IPv4-действия TTL и поддерживает те же операции&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;CONNMARK&lt;/strong&gt; - устанавливает или изменяет маркировку соединения. Поддерживает те же опции, что и MARK, а также дополнительные опции --restore-mark (копирует маркировку соединения в маркировку пакета) и --save-mark (копирует маркировку пакета в маркировку соединения).&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;MARK&lt;/strong&gt; -  устанавливает или изменяет маркировку пакета. &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;CLASSIFY&lt;/strong&gt; - Разделяет пакеты в классы.&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;ULOG&lt;/strong&gt; -  позволяет передавать информацию об обработанных пакетах специальным демонам, таким, как ulogd&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;NFLOG&lt;/strong&gt; - более универсальный вариант ULOG, обеспечивающий передачу информации о пакете не напрямую в netlink-сокет (как это делает ULOG), а специальной подсистеме — logging backend. Например, бэкенд nfnetlink_log обеспечивает передачу данных в netlink-сокет, то есть с ним NFLOG работает аналогично ULOG.&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;TCPMSS&lt;/strong&gt; — устанавливает максимальный размер TCP-сегмента.&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;TPROXY&lt;/strong&gt; — реализует механизм полностью прозрачного проксирования.&lt;/ul&gt; " />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 133.9404,92.729358 0.13476,13.075082 18.69004,0.0469 -0.0568,-13.143278 z"
        id="path870-5-9"
-       inkscape:label="p-mangle"
-       data="используется для модификации некоторых заголовков (TTL, TOS) и маркировке пакетов и соединений" />
+       inkscape:label="f-mangle"
+       data="Позволяет всё теже действия, что и mangle в цепочке PREROUTING, но для транзитных пакетов"
+       description="См. mangle цепочки prerouting" />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 172.22938,143.90672 0.13476,13.07508 18.69004,0.0469 -0.0568,-13.14327 z"
        id="path870-5-9-23"
        inkscape:label="o-mangle"
-       data="используется для модификации некоторых заголовков (TTL, TOS) и маркировке пакетов и соединений" />
+       data="Позволяет всё теже действия, что и mangle в цепочке PREROUTING"
+       description="См. mangle цепочки prerouting" />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 83.539312,143.74209 0.13476,13.07508 18.690038,0.0469 -0.0568,-13.14328 z"
        id="path870-5-9-2"
-       inkscape:label="p-mangle"
-       data="используется для модификации некоторых заголовков (TTL, TOS) и маркировке пакетов и соединений" />
+       inkscape:label="pr-mangle"
+       data="Позволяет всё теже действия, что и mangle в цепочке PREROUTING"
+       description="См. mangle цепочки prerouting" />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 188.03367,57.375938 0.13476,13.075081 18.69004,0.04693 -0.0568,-13.143277 z"
        id="path870-5-1"
-       inkscape:label="p-mangle"
-       data="используется для модификации некоторых заголовков (TTL, TOS) и маркировке пакетов и соединений" />
+       inkscape:label="i-mangle"
+       data="Позволяет всё теже действия, что и mangle в цепочке PREROUTING"
+       description="См. mangle цепочки prerouting" />
     <path
        style="display:inline;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0"
        d="m 134.18158,57.642546 0.13476,13.075081 18.69004,0.04693 -0.0568,-13.143277 z"
        id="path870-3"
        inkscape:label="p-nat"
-       data="предназначен для преобразования адресов и портов источника и назначения пакетов" />
+       data="Предназначен для преобразования адресов и портов источника и назначения пакетов"
+       description="Таблица &lt;strong&gt;nat&lt;/strong&gt; в цепочке &lt;strong&gt;PREROUTING&lt;/strong&gt; - в эту цепочку пакеты попадают до принятия решения о маршрутизации.&lt;br&gt;&lt;br&gt;По сути, термин «решение о маршрутизации» подразумевает деление трафика на входящий (предназначенный самому хосту) и транзитный (идущий через этот хост на другие хосты). Именно на данном этапе нужно проводить операции проброса (DNAT, REDIRECT, NETMAP). Доступные действия:&lt;br&gt;  &lt;ul&gt;&lt;strong&gt;DNAT&lt;/strong&gt; (Destination NAT) - Данное действие позволяет изменить адрес или порт назначения пакета при его прохождении через цепочку PREROUTING. В результате, пакет будет перенаправлен на другой адрес и/или порт назначения. Например, вы можете использовать DNAT для перенаправления входящего сетевого трафика на другой сервер или порт.&lt;br&gt; Пример использования DNAT:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.1.100:8080 &lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;REDIRECT&lt;/strong&gt; - Данное действие позволяет перенаправить пакеты на локальные порты на том же хосте, где происходит прохождение пакета через цепочку PREROUTING. Это полезно при настройке прокси-серверов или перенаправления портов на локальном уровне.&lt;br&gt; Пример использования REDIRECT:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80 &lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;NETMAP&lt;/strong&gt; - Это дополнительное расширение iptables, которое позволяет изменять IP-адреса пакетов для сетей с помощью специальных карт. Это будет полезно, например, при перенаправлении пакетов между различными частными сетями.&lt;br&gt; Пример использования NETMAP:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A PREROUTING -d 192.168.0.0/24 -j NETMAP --to 172.16.0.0/24 &lt;/pre&gt; &lt;/ul&gt;" />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 147.9659,143.83781 0.13476,13.07508 18.69004,0.0469 -0.0568,-13.14327 z"
        id="path870-3-75"
        inkscape:label="o-nat"
-       data="предназначен для преобразования адресов и портов источника и назначения пакетов" />
+       data="Изменяет адрес и/или порт назначения пакета перед отправкой"
+       description="В таблице &lt;strong&gt;nat&lt;/strong&gt; цепочки &lt;strong&gt;OUTPUT&lt;/strong&gt; доступны следующие действия:&lt;br&gt;  &lt;ul&gt;&lt;strong&gt;DNAT&lt;/strong&gt; - Изменяет адрес и/или порт назначения пакета перед отправкой&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;SNAT&lt;/strong&gt; - Изменяет адрес и/или порт источника пакета перед отправкой&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;MASQUERADE&lt;/strong&gt; - Автоматически выбирает адрес и/или порт для исходящих пакетов, чтобы скрыть реальный адрес источника&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;REDIRECT&lt;/strong&gt; - Перенаправляет пакет на другой адрес и/или порт в пределах локальной сети.&lt;/ul&gt;" />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 58.388523,143.72612 0.13476,13.07509 18.69004,0.0469 -0.0568,-13.14328 z"
        id="path870-3-7"
-       inkscape:label="p-nat"
-       data="предназначен для преобразования адресов и портов источника и назначения пакетов" />
+       inkscape:label="pr-nat"
+       data="Предназначен для преобразования адресов и портов источника и назначения пакетов"
+       description="Таблица &lt;strong&gt;nat&lt;/strong&gt; в цепочке &lt;strong&gt;POSTROUTING&lt;/strong&gt;&lt;br&gt; Доступные действия&lt;br&gt; &lt;ul&gt;&lt;strong&gt;SNAT&lt;/strong&gt; (Source NAT) - Данное действие позволяет изменить адрес или порт источника пакета при его прохождении через цепочку POSTROUTING. Он используется для изменения исходного адреса пакета и/или порта исходного соединения. SNAT часто используется для изменения исходящего трафика с приватного адресного пространства на общедоступный публичный адрес, чтобы достичь доступности в Интернете. &lt;br&gt; Пример использования SNAT:&lt;br&gt;&lt;br&gt; &lt;/pre&gt; iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 203.0.113.10 &lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt; MASQUERADE&lt;/strong&gt; - Данное действие является особой формой SNAT и используется для динамического изменения исходного адреса пакетов, когда источниками являются динамические IP-адреса (например, настроенные через DHCP). MASQUERADE удобно использовать в случаях, когда внешний адрес сервера нат неизвестен заранее.&lt;br&gt;  Пример использования MASQUERADE:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE &lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;NETMAP&lt;/strong&gt; - Как и в цепочке PREROUTING, действие NETMAP позволяет изменить IP-адреса пакетов для сетей с помощью специальных карт, но уже после прохождения через цепочку POSTROUTING.&lt;br&gt;  Пример использования NETMAP:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A POSTROUTING -d 172.16.0.0/24 -j NETMAP --to 192.168.0.0/24 &lt;/pre&gt; &lt;/ul&gt;" />
     <path
        style="display:inline;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0"
        d="m 134.23268,110.29223 0.13476,13.07509 18.69004,0.0469 -0.0568,-13.14328 z"
        id="path870-2"
        inkscape:label="f-filter"
-       data="применяется для фильтрации пакетов" />
+       data="Применяется для фильтрации пакетов"
+       description="Применяется для фильтрации пакетов. Основные действия описаны в цепочке INPUT. " />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 124.49491,143.83448 0.13476,13.07509 18.69004,0.0469 -0.0568,-13.14328 z"
        id="path870-2-0"
        inkscape:label="o-filter"
-       data="применяется, собственно, для фильтрации пакетов, является таблицей по умолчанию, т.е. если таблица не указана явно, то используется filter" />
+       data="Применяется для фильтрации пакетов"
+       description="Применяется для фильтрации пакетов. Основные действия описаны в цепочке INPUT." />
     <path
        style="display:inline;opacity:0;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 215.00992,57.394635 0.13476,13.07509 18.69004,0.0469 -0.0568,-13.14328 z"
        id="path870-2-8"
        inkscape:label="i-filter"
-       data="применяется для фильтрации пакетов, является таблицей по умолчанию" />
+       data="Применяется для фильтрации пакетов, является таблицей по умолчанию"
+       description="Применяется для фильтрации пакетов, является таблицей по умолчанию.&lt;br&gt;  &lt;ul&gt;&lt;strong&gt;ACCEPT&lt;/strong&gt; — пропуск пакета. Пакет покидает текущую базовую цепочку и следует дальше по потоковой диаграмме (см. рис.).&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;REJECT&lt;/strong&gt; — заблокировать пакет и сообщить его источнику об отказе. По умолчанию об отказе сообщается отправкой ответного ICMP-пакета «icmp-port-unreachable». Однако, это действие поддерживает опцию --reject-with, позволяющую указать формулировку сообщения об отказе (возможные значения: icmp-net-unreachable, icmp-host-unreachable, icmp-proto-unreachable, icmp-net-prohibited, icmp-host-prohibited). Для протокола TCP поддерживается отказ в форме отправки RST-пакета (--reject-with tcp-reset).&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;DROP&lt;/strong&gt; — заблокировать пакет, не сообщая источнику об отказе. Более предпочтительна при фильтрации трафика на интерфейсах, подключенных к интернету, так как понижает информативность сканирования портов хоста злоумышленниками.&lt;/ul&gt;&lt;br&gt; Также определенный интерес представляют действия, предоставляемые модулями xtables-addons (в настоящее время этот проект уже включен в Debian testing). Некоторые из них:  &lt;ul&gt;&lt;strong&gt;STEAL&lt;/strong&gt;— аналогично DROP, но в случае использования в цепочке OUTPUT при блокировании исходящего пакета не сообщает об ошибке приложению, пытавшемуся отправить этот пакет.&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;TARPIT&lt;/strong&gt; — «подвесить» TCP-соединение. Используется лишь в самых крайних случаях, например, при борьбе с DoS-атаками. Отвечает на входящее соединение, после чего уменьшает размер фрейма до нуля, блокируя возможность передачи данных. Соединение будет «висеть» в таком состоянии пока не истечет тайм-аут на атакующей стороне (обычно 20—30 минут). При этом на такое соединение расходуются системные ресурсы атакующей стороны (процессорное время и оперативная память), что может быть весьма ощутимо при значительном количестве соединений. В случае правильного использования действия TARPIT ресурсы атакуемой стороны практически не расходуются. &lt;br&gt;Под правильным применением понимается предотвращение обработки таких соединений подсистемой conntrack, так как в противном случае будут расходоваться системные ресурсы самого атакуемого хоста. Например, перед добавлением правила блокирования порта&lt;br&gt;  &lt;pre&gt;iptables -I INPUT -p tcp --dport 25 -j TARPIT&lt;/pre&gt; обязательно добавляйте в таблицу raw соответствующее правило, предотвращающее обработку блокируемых соединений подсистемой conntrack: &lt;pre&gt;iptables -t raw -I PREROUTING -p tcp --dport 25 -j NOTRACK&lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;DELUDE&lt;/strong&gt; — создать видимость открытого TCP-порта. На SYN-пакеты отвечает пакетами SYN/ACK, на все прочие пакеты отвечает RST. Очень полезно для введения в заблуждение злоумышленника, сканирующего порты вашего хоста.&lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;CHAOS&lt;/strong&gt;— для каждого нового TCP-соединения случайно выбрать одно из двух действий. Первое из них — REJECT, второе, в зависимости от выбранной опции, либо TARPIT (--tarpit), либо DELUDE (--delude). В частности, при использовании действия CHAOS --delude для всех неиспользуемых портов, сканирующий ваши порты злоумышленник получит совершенно неверную информацию о состоянии ваших портов. В случае с CHAOS --tarpit ситуация усугубится еще и «подвисающими» соединениями.&lt;/ul&gt;" />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.288987px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 79.996308,42.010812 0.07049,6.746714 47.872532,0.05237 0.0277,-6.692188 z"
        id="path2619"
-       data="используется для всего входящего трафика до принятия первого решения о маршрутизации"
+       data="Используется для всего входящего трафика до принятия первого решения о маршрутизации"
        inkscape:label="prerouting" />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1048,27 +1050,35 @@
        inkscape:label="input" />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.271387px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 155.25501,102.42224 0.11217,6.30916 35.46795,-0.0344 0.0458,-6.25958 z"
+       d="m 156.31335,102.42224 0.11217,6.30916 35.46795,-0.0344 0.0458,-6.25958 z"
        id="path2635"
-       data="Обработка транзитного трафика узла (Docker-net, lxc-net, другие сервера в сети)"
+       data="Обработка транзитного трафика узла &lt;br&gt;
+&lt;ul&gt;- Docker-net&lt;/ul&gt;
+&lt;ul&gt;- lxc-net&lt;/ul&gt;
+&lt;ul&gt;- другие сервера в сети&lt;/ul&gt;"
        inkscape:label="forward" />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.271174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 163.82318,165.54021 0.0279,6.04555 30.02904,0.001 0.0162,-6.12337 z"
        id="path2643"
-       data="применятся для исходящего трафика текущего узла"
+       data="Применятся для исходящего трафика текущего узла"
        inkscape:label="output" />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.270016px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 54.896469,165.43262 -0.02402,6.23835 52.130631,-0.0738 0.0161,-6.08488 z"
        id="path2806"
-       data=" используется для всего исходящего трафика после принятия всех решений о маршрутизации"
+       data="Используется для всего исходящего трафика после принятия всех решений о маршрутизации"
        inkscape:label="postrouting" />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.251879px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 260.00544,49.216054 -0.84877,1.381617 -0.10222,112.294179 1.02752,1.87701 1.34883,0.94366 14.41883,-0.095 1.37847,-0.93383 0.70283,-1.62201 0.0314,-112.405796 -0.79917,-1.450478 -1.80701,-0.869036 -13.13215,0.117775 -1.19573,0.04875 z"
        id="path2968"
        sodipodi:nodetypes="cccccccccccccc"
-       inkscape:label="localproc" />
+       inkscape:label="localproc"
+       data="Сервисы расположенные на локальном узле:&lt;br&gt;
+&lt;ul&gt;- ssh&lt;/ul&gt;
+&lt;ul&gt;- nginx&lt;/ul&gt;
+&lt;ul&gt;- mail&lt;/ul&gt;
+&lt;ul&gt;- docker-proxy и др.&lt;/ul&gt;" />
   </g>
 </svg>

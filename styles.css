@@ -18,13 +18,13 @@ body {
     flex-direction: column;
 }
 
-#left,
+#top,
 #middle,
-#right {
+#comment {
     flex: 1;
 }
 
-#left {
+#top {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,14 +35,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: lightgreen;
+    background-color: lightblue;
+/*    background-color: lightgreen;*/
 }
 
-#right {
+#comment {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: lightyellow;
+}
+
+#information-title {
+   text-align: center;
+}
+
+#description-container {
+    max-width: 850px !important;
 }
 
 #button1, #button2 {
@@ -61,7 +70,7 @@ body {
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -100%); 
-    max-width: 200px;
+    max-width: 250px;
 }
 
 /* style.css */
