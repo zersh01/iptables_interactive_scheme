@@ -44,6 +44,7 @@
                $element.css('opacity', '0.7');
             }
          }
+	    // Меняем цвет
 	    function changeStrokeColor(elementId, color) {
 	       var $element = $('#' + elementId);
 	       var previousColor = $element.data('previous-color');
@@ -56,7 +57,7 @@
 	          $element.css('stroke', color);
 	       }
 	    }
-
+	    // Меняем толщину 
 	    function changeStrokeWidth(elementId) {
 	       var $element = $('#' + elementId);
 	       var previousStrokeWidth = $element.css('stroke-width');
@@ -160,6 +161,7 @@
 
 	        changeStrokeWidth('rect167');
 		changeStrokeColor('rect167', 'rgb(220,20,60)');
+
 
 	        changeStrokeColor('rect167-5', 'rgb(220,20,60)');
 		changeStrokeWidth('rect167-5');

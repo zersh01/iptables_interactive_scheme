@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   sodipodi:docname="image.svg"
+   sodipodi:docname="iptables.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.52"
-     inkscape:cx="314.47368"
+     inkscape:cx="305.92105"
      inkscape:cy="381.25"
      inkscape:window-width="1920"
      inkscape:window-height="1032"
@@ -1052,8 +1052,8 @@
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.271387px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 156.31335,102.42224 0.11217,6.30916 35.46795,-0.0344 0.0458,-6.25958 z"
        id="path2635"
-       data="Обработка транзитного трафика узла &lt;br&gt;
-&lt;ul&gt;- Docker-net&lt;/ul&gt;
+       data="Обработка транзитного трафика узла для&lt;br&gt;
+&lt;ul&gt;- Docker-net (не путать с docker-proxy)&lt;/ul&gt;
 &lt;ul&gt;- lxc-net&lt;/ul&gt;
 &lt;ul&gt;- другие сервера в сети&lt;/ul&gt;"
        inkscape:label="forward" />
@@ -1075,10 +1075,6 @@
        id="path2968"
        sodipodi:nodetypes="cccccccccccccc"
        inkscape:label="localproc"
-       data="Сервисы расположенные на локальном узле:&lt;br&gt;
-&lt;ul&gt;- ssh&lt;/ul&gt;
-&lt;ul&gt;- nginx&lt;/ul&gt;
-&lt;ul&gt;- mail&lt;/ul&gt;
-&lt;ul&gt;- docker-proxy и др.&lt;/ul&gt;" />
+       data="Сервисы расположенные на локальном узле:&lt;br&gt; &lt;ul&gt;- ssh&lt;/ul&gt; &lt;ul&gt;- nginx&lt;/ul&gt; &lt;ul&gt;- mail&lt;/ul&gt; &lt;ul&gt;- docker-proxy и др.&lt;/ul&gt;" />
   </g>
 </svg>
