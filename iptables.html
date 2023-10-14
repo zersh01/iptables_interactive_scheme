@@ -29,6 +29,12 @@
     //Кнопки направления трафика
     function buttonClicked(button) {
        button.classList.toggle('clicked');
+	var button1 = document.getElementById('button1');
+	var button2 = document.getElementById('button2');
+	//Если нажаты обе кнопки - reload страницы
+        if (button1.classList.contains('clicked') && button2.classList.contains('clicked')) {
+    	    location.reload();
+        }
     }
 
       $(document).ready(function () {
@@ -70,8 +76,9 @@
 	          $element.css('stroke-width', '1px');
 	       }
 	    }
-      
-	    $.get("iptables.svg", function (data) {
+	    //no cache 
+            var timestamp = new Date().getTime();
+	    $.get("iptables.svg?time=" + timestamp, function (data) {
 		var $svg = $(data).find('svg');
 		var paths = $svg.find('path');
 	        var svgWidth = $svg.width();

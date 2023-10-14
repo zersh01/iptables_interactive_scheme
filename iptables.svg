@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.52"
-     inkscape:cx="305.92105"
-     inkscape:cy="381.25"
+     inkscape:cx="650"
+     inkscape:cy="411.51316"
      inkscape:window-width="1920"
      inkscape:window-height="1032"
      inkscape:window-x="0"
@@ -1013,7 +1013,7 @@
        id="path870-3-7"
        inkscape:label="pr-nat"
        data="Предназначен для преобразования адресов и портов источника и назначения пакетов"
-       description="Таблица &lt;strong&gt;nat&lt;/strong&gt; в цепочке &lt;strong&gt;POSTROUTING&lt;/strong&gt;&lt;br&gt; Доступные действия&lt;br&gt; &lt;ul&gt;&lt;strong&gt;SNAT&lt;/strong&gt; (Source NAT) - Данное действие позволяет изменить адрес или порт источника пакета при его прохождении через цепочку POSTROUTING. Он используется для изменения исходного адреса пакета и/или порта исходного соединения. SNAT часто используется для изменения исходящего трафика с приватного адресного пространства на общедоступный публичный адрес, чтобы достичь доступности в Интернете. &lt;br&gt; Пример использования SNAT:&lt;br&gt;&lt;br&gt; &lt;/pre&gt; iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 203.0.113.10 &lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt; MASQUERADE&lt;/strong&gt; - Данное действие является особой формой SNAT и используется для динамического изменения исходного адреса пакетов, когда источниками являются динамические IP-адреса (например, настроенные через DHCP). MASQUERADE удобно использовать в случаях, когда внешний адрес сервера нат неизвестен заранее.&lt;br&gt;  Пример использования MASQUERADE:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE &lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;NETMAP&lt;/strong&gt; - Как и в цепочке PREROUTING, действие NETMAP позволяет изменить IP-адреса пакетов для сетей с помощью специальных карт, но уже после прохождения через цепочку POSTROUTING.&lt;br&gt;  Пример использования NETMAP:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A POSTROUTING -d 172.16.0.0/24 -j NETMAP --to 192.168.0.0/24 &lt;/pre&gt; &lt;/ul&gt;" />
+       description="Таблица &lt;strong&gt;nat&lt;/strong&gt; в цепочке &lt;strong&gt;POSTROUTING&lt;/strong&gt;&lt;br&gt;&lt;br&gt;Доступные действия:&lt;br&gt; &lt;ul&gt;&lt;strong&gt;SNAT&lt;/strong&gt; (Source NAT) - Данное действие позволяет изменить адрес или порт источника пакета при его прохождении через цепочку POSTROUTING. Он используется для изменения исходного адреса пакета и/или порта исходного соединения. SNAT часто используется для изменения исходящего трафика с приватного адресного пространства на общедоступный публичный адрес, чтобы достичь доступности в Интернете. &lt;br&gt; Пример использования SNAT:&lt;br&gt;&lt;br&gt; &lt;/pre&gt; iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 203.0.113.10 &lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt; MASQUERADE&lt;/strong&gt; - Данное действие является особой формой SNAT и используется для динамического изменения исходного адреса пакетов, когда источниками являются динамические IP-адреса (например, настроенные через DHCP). MASQUERADE удобно использовать в случаях, когда внешний адрес сервера нат неизвестен заранее.&lt;br&gt;  Пример использования MASQUERADE:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE &lt;/pre&gt; &lt;/ul&gt; &lt;ul&gt;&lt;strong&gt;NETMAP&lt;/strong&gt; - Как и в цепочке PREROUTING, действие NETMAP позволяет изменить IP-адреса пакетов для сетей с помощью специальных карт, но уже после прохождения через цепочку POSTROUTING.&lt;br&gt;  Пример использования NETMAP:&lt;br&gt;&lt;br&gt; &lt;pre&gt; iptables -t nat -A POSTROUTING -d 172.16.0.0/24 -j NETMAP --to 192.168.0.0/24 &lt;/pre&gt; &lt;/ul&gt;" />
     <path
        style="display:inline;fill:#999999;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;opacity:0"
        d="m 134.23268,110.29223 0.13476,13.07509 18.69004,0.0469 -0.0568,-13.14328 z"
@@ -1040,35 +1040,39 @@
        d="m 79.996308,42.010812 0.07049,6.746714 47.872532,0.05237 0.0277,-6.692188 z"
        id="path2619"
        data="Используется для всего входящего трафика до принятия первого решения о маршрутизации"
-       inkscape:label="prerouting" />
+       inkscape:label="prerouting"
+       description="Цепочка &lt;strong&gt;PREROUTING&lt;/strong&gt; в iptables используется для обработки пакетов при их получении, то есть до того, как они будут переданы в соответствующий сетевой стек. Это первое место, где можно встретить входящий пакет в системе Linux.&lt;br&gt;&lt;br&gt;
+Цепочка работает на уровне ядра, что означает, что она может обрабатывать пакеты очень быстро и эффективно. Однако это также означает, что ошибки в конфигурации могут привести к серьезным проблемам с сетевой связностью." />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 198.93519,42.07864 22.6516,-0.02439 0.0239,6.80768 -22.59446,0.01307 z"
        id="path2625"
        sodipodi:nodetypes="ccccc"
        data="Обработка входящего трафика текущего узла"
-       inkscape:label="input" />
+       inkscape:label="input"
+       description="Цепочка &lt;strong&gt;INPUT&lt;/strong&gt; - это набор правил, которые применяются к входящему трафику.&lt;br&gt;&lt;br&gt;
+Важно отметить, что правила в цепочке INPUT применяются только к трафику, предназначенному для самого компьютера. Если пакет предназначен для другого компьютера и ваш компьютер только перенаправляет его, этот пакет будет обработан цепочкой &lt;strong&gt;FORWARD&lt;/strong&gt;." />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.271387px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 156.31335,102.42224 0.11217,6.30916 35.46795,-0.0344 0.0458,-6.25958 z"
        id="path2635"
-       data="Обработка транзитного трафика узла для&lt;br&gt;
-&lt;ul&gt;- Docker-net (не путать с docker-proxy)&lt;/ul&gt;
-&lt;ul&gt;- lxc-net&lt;/ul&gt;
-&lt;ul&gt;- другие сервера в сети&lt;/ul&gt;"
-       inkscape:label="forward" />
+       data="Обработка транзитного трафика узла для&lt;br&gt; &lt;ul&gt;- Docker-net (не путать с docker-proxy)&lt;/ul&gt; &lt;ul&gt;- lxc-net&lt;/ul&gt; &lt;ul&gt;- другие сервера в сети&lt;/ul&gt;"
+       inkscape:label="forward"
+       description="&lt;strong&gt;FORWARD&lt;/strong&gt; - правила в данной цепочке применяются ко всем пакетам, которые поступают в один интерфейс и перенаправляются на другной." />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.271174px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 163.82318,165.54021 0.0279,6.04555 30.02904,0.001 0.0162,-6.12337 z"
        id="path2643"
        data="Применятся для исходящего трафика текущего узла"
-       inkscape:label="output" />
+       inkscape:label="output"
+       description="Цепочка &lt;strong&gt;OUTPUT&lt;/strong&gt;  используется для контроля и манипулирования трафиком, который генерируется локальной системой и направляется наружу. Это включает в себя все пакеты, которые генерируются процессами на системе и отправляются в любую другую сеть или устройство." />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.270016px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 54.896469,165.43262 -0.02402,6.23835 52.130631,-0.0738 0.0161,-6.08488 z"
        id="path2806"
        data="Используется для всего исходящего трафика после принятия всех решений о маршрутизации"
-       inkscape:label="postrouting" />
+       inkscape:label="postrouting"
+       description="Цепочка &lt;strong&gt;POSTROUTING&lt;/strong&gt; используется для изменения пакетов данных после того, как они были маршрутизированы, но перед тем, как они покинут компьютер. " />
     <path
        style="opacity:0;fill:#e6e6e6;stroke:#000000;stroke-width:0.251879px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 260.00544,49.216054 -0.84877,1.381617 -0.10222,112.294179 1.02752,1.87701 1.34883,0.94366 14.41883,-0.095 1.37847,-0.93383 0.70283,-1.62201 0.0314,-112.405796 -0.79917,-1.450478 -1.80701,-0.869036 -13.13215,0.117775 -1.19573,0.04875 z"
