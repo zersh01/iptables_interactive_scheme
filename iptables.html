@@ -38,43 +38,50 @@
     }
 
       $(document).ready(function () {
-         function changeOpacity(elementId) {
-            var $element = $('#' + elementId);
-            var previousOpacity = $element.css('opacity');
-      
-            if (previousOpacity === '0.7') {
-               // Восстанавливаем предыдущее значение
-               $element.css('opacity', '0');
-            } else {
-               // Устанавливаем новое значение
-               $element.css('opacity', '0.7');
-            }
-         }
+	function changeOpacity(...elementIds) {
+	elementIds.forEach(elementId => {
+    	    var $element = $('#' + elementId);
+    	    var previousOpacity = $element.css('opacity');
+
+    	    if (previousOpacity === '0.7') {
+        	// Восстанавливаем предыдущее значение
+        	$element.css('opacity', '0');
+    	    } else {
+        	// Устанавливаем новое значение
+        	$element.css('opacity', '0.7');
+    	    }
+	    });
+	}
 	    // Меняем цвет
-	    function changeStrokeColor(elementId, color) {
-	       var $element = $('#' + elementId);
-	       var previousColor = $element.data('previous-color');
+	    function changeStrokeColor(elementIds, color) {
+	        for (var i = 0; i < elementIds.length; i++) {
+    		    var $element = $('#' + elementIds[i]);
+	    	    var previousColor = $element.data('previous-color');
 
-	       if (previousColor) {
-	          $element.css('stroke', previousColor);
-	          $element.removeData('previous-color');
-	       } else {
-	          $element.data('previous-color', $element.css('stroke'));
-	          $element.css('stroke', color);
-	       }
+    		    if (previousColor) {
+        		$element.css('stroke', previousColor);
+        		$element.removeData('previous-color');
+    		    } else {
+        		$element.data('previous-color', $element.css('stroke'));
+        		$element.css('stroke', color);
+    		    }
+		}
 	    }
-	    // Меняем толщину 
-	    function changeStrokeWidth(elementId) {
-	       var $element = $('#' + elementId);
-	       var previousStrokeWidth = $element.css('stroke-width');
 
-	       if (previousStrokeWidth === '1px') {
-	          // Восстанавливаем предыдущее значение
-	          $element.css('stroke-width', '0.248026');
-	       } else {
-	          // Устанавливаем новое значение
-	          $element.css('stroke-width', '1px');
-	       }
+	    // Меняем толщину 
+	    function changeStrokeWidth(...elementIds) {
+    		elementIds.forEach(function(elementId) {
+        	    var $element = $('#' + elementId);
+        	    var previousStrokeWidth = $element.css('stroke-width');
+
+        	    if (previousStrokeWidth === '1px') {
+            	    // Восстанавливаем предыдущее значение
+            		$element.css('stroke-width', '0.248026');
+        	    } else {
+            		// Устанавливаем новое значение
+            		$element.css('stroke-width', '1px');
+        	    }
+    		});
 	    }
 	    //no cache 
             var timestamp = new Date().getTime();
@@ -122,66 +129,32 @@
          $('#top button').on('click', function() {
 	    //Transit traffic
 	    if ($(this).is(':first-child')) {
-               changeOpacity('path870-5-1');
-               changeOpacity('path870-2-8');
-               changeOpacity('path870-7-9');
-               changeOpacity('path2968');
-               changeOpacity('path2625');
-               changeOpacity('path2643');
-               changeOpacity('path870-2-0');
-               changeOpacity('path870-3-75');
-               changeOpacity('path870-5-9-23');
-               changeOpacity('path870-22');
+		//Прозрачность
+               changeOpacity('path870-5-1','path870-2-8','path870-7-9','path2968','path2625','path2643','path870-2-0','path870-3-75','path870-5-9-23','path870-22');
 
 		//Color arrow
-	       changeStrokeColor('path46227', 'rgb(220,20,60)');
-	       changeStrokeColor('path52951', 'rgb(220,20,60)');
-	       changeStrokeColor('path46283', 'rgb(220,20,60)');
+	       changeStrokeColor(
+		    [
+			'path63094','path42369-0-5','path42369-0-5-7','path42889','path49110-7-3-0','path46227','path52951','path46283','rect167',
+			'rect167-5-6','rect167-5-0','path49110-7-3-0-9' 
+		    ], 'rgb(220,20,60)');
+
 	      //Prerouting/Forward/Postrouting/ bold
-	      changeStrokeWidth('rect167');
-	      changeStrokeColor('rect167', 'rgb(220,20,60)');
-
-	      changeStrokeWidth('rect167-5-6');
-	      changeStrokeColor('rect167-5-6', 'rgb(220,20,60)');
-
-	      changeStrokeWidth('rect167-5-0');
-	      changeStrokeColor('rect167-5-0', 'rgb(220,20,60)');
-
+	      changeStrokeWidth('rect167','rect167-5-6','rect167-5-0');
             } else {
 		//Local traffic
-               changeOpacity('path870-5-9');
-               changeOpacity('path870-2');
-               changeOpacity('path2635');
+               changeOpacity('path870-5-9','path870-2','path2635');
 
 		//Color arrow
-	       changeStrokeColor('path42369-7', 'rgb(220,20,60)');
-	       changeStrokeColor('path46403', 'rgb(220,20,60)');
-	       changeStrokeColor('path46403-2', 'rgb(220,20,60)');
-	       changeStrokeColor('path49110', 'rgb(220,20,60)');
-	       changeStrokeColor('path49110-7', 'rgb(220,20,60)');
-	       changeStrokeColor('path49110-7-3', 'rgb(220,20,60)');
-	       changeStrokeColor('path49110-7-3-8', 'rgb(220,20,60)');
-	       changeStrokeColor('path49110-7-3-84', 'rgb(220,20,60)');
-	       changeStrokeColor('path49110-7-3-4', 'rgb(220,20,60)');
+	       changeStrokeColor(
+		[
+		    'path63094','path42369-0-5','path42369-0-5-7','path42889','path42369-7','path42369-7','path42369-7','path46403','path46403-2',
+		    'path49110','path49110-7','path49110-7-3','path49110-7-3-8','path49110-7-3-84','path49110-7-3-4','rect167',
+		    'rect167-5','rect167-2','rect165-6','rect167-5-0','path49110-7-3-0','path49110-7-3-0-9'
+		],'rgb(220,20,60)');
 
 		//Input/Output/LocalProc bold
-
-	        changeStrokeWidth('rect167');
-		changeStrokeColor('rect167', 'rgb(220,20,60)');
-
-
-	        changeStrokeColor('rect167-5', 'rgb(220,20,60)');
-		changeStrokeWidth('rect167-5');
-
-	        changeStrokeColor('rect167-2', 'rgb(220,20,60)');
-		changeStrokeWidth('rect167-2');
-
-		changeStrokeColor('rect165-6', 'rgb(220,20,60)');
-		changeStrokeWidth('rect165-6');
-
-		changeStrokeColor('rect167-5-0', 'rgb(220,20,60)');
-	        changeStrokeWidth('rect167-5-0');
-
+	        changeStrokeWidth('rect167','rect167-5','rect167-2','rect165-6','rect167-5-0');
             }
          });
       });
