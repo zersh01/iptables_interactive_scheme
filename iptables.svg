@@ -24,132 +24,16 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="8.5984184"
-     inkscape:cx="653.14337"
-     inkscape:cy="545.1584"
+     inkscape:zoom="1.0748023"
+     inkscape:cx="519.16524"
+     inkscape:cy="548.47296"
      inkscape:window-width="1920"
      inkscape:window-height="1032"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2"
-     showguides="true">
-    <sodipodi:guide
-       position="17.952465,159.80281"
-       orientation="1,0"
-       id="guide745"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="169.75392,156.18168"
-       orientation="0,-1"
-       id="guide747"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="72.68134,161.89436"
-       orientation="0,-1"
-       id="guide41352"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="138.5282,69.746364"
-       orientation="0,-1"
-       id="guide41891"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="176.98086,104.50166"
-       orientation="0,-1"
-       id="guide41893"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="52.256189,178.44909"
-       orientation="1,0"
-       id="guide41895"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="70.681425,146.22033"
-       orientation="0,-1"
-       id="guide42367"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="249.5726,59.640215"
-       orientation="0,-1"
-       id="guide49017"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="100.81501,44.480991"
-       orientation="0,-1"
-       id="guide61221"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="105.92037,167.96258"
-       orientation="0,-1"
-       id="guide2613"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="79.98424,166.35245"
-       orientation="1,0"
-       id="guide2615"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="125.15488,162.69702"
-       orientation="1,0"
-       id="guide2617"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="198.9048,160.39688"
-       orientation="1,0"
-       id="guide2621"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="221.55238,152.76563"
-       orientation="1,0"
-       id="guide2623"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="155.30206,102.79327"
-       orientation="1,0"
-       id="guide2627"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="171.48769,107.5628"
-       orientation="0,-1"
-       id="guide2629"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="169.54911,101.28548"
-       orientation="0,-1"
-       id="guide2631"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="189.0888,102.94712"
-       orientation="1,0"
-       id="guide2633"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="163.82568,44.020347"
-       orientation="1,0"
-       id="guide2637"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="192.38131,43.435695"
-       orientation="1,0"
-       id="guide2639"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="186.78096,38.389225"
-       orientation="0,-1"
-       id="guide2641"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="54.831416,45.157619"
-       orientation="1,0"
-       id="guide2802"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="104.87596,44.069695"
-       orientation="1,0"
-       id="guide2804"
-       inkscape:locked="false" />
-  </sodipodi:namedview>
+     inkscape:current-layer="layer1"
+     showguides="true" />
   <defs
      id="defs2">
     <marker
@@ -423,7 +307,8 @@
        width="18.633005"
        height="12.854272"
        x="84.262024"
-       y="57.369759" />
+       y="57.369759"
+       ry="3.1359653" />
     <rect
        style="fill:#c82647;fill-opacity:1;stroke:#800000;stroke-width:0.280795;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect445-6"
@@ -493,7 +378,8 @@
        width="18.633005"
        height="12.854272"
        x="195.50542"
-       y="143.84805" />
+       y="143.84805"
+       ry="2.4406281" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.53358px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.265018"
