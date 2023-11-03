@@ -1,0 +1,2 @@
+It is designed to process packets before they are transmitted to the conntrack system,
+which monitors the status of connections and the belonging of packets to these connections

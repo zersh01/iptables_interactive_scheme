@@ -1,0 +1,5 @@
+The <strong>INPUT</strong> chain is a set of rules that apply to incoming traffic.<br><br>
+
+It is important to note that the rules in the INPUT chain apply only to traffic destined for the computer itself.
+If the packet is intended for another computer and your computer only redirects it, this packet will be processed by the <strong>FORWARD</strong> chain.
+

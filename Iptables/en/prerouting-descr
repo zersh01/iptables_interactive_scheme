@@ -1,0 +1,5 @@
+The <strong>PREROUTING</strong> chain in iptables is used to process packets when they are received, that is,
+before they are transferred to the corresponding network stack. This is the first place where you can find an incoming package on a Linux system.<br><br>
+The chain operates at the core level, which means it can process packets very quickly and efficiently.
+However, this also means that configuration errors can lead to serious problems with network connectivity.
+

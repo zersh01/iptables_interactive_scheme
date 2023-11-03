@@ -60,6 +60,10 @@ body {
    border-radius: 25px; /* Установите половину высоты кнопок, чтобы получить овальную форму */
 }
 
+#languageSelect {
+   margin-left: 30px; /* Устанавливает отступ слева на 10px */
+}
+
 .tooltip {
     font-size: 14px;
     background-color: rgba(0, 0, 0, 0.8);

@@ -1,0 +1,5 @@
+The following actions are available in the <strong>nat</strong> table in the <strong>OUTPUT</strong> chain:<br>
+<ul><strong>DNAT</strong> - Changes the address and/or destination port of the packet before sending</ul>
+<ul><strong>SNAT</strong> - Changes the address and/or port of the packet source before sending</ul>
+<ul><strong>MASQUERADE</strong> - Automatically selects the address and/or port for outgoing packets to hide the real source address</ul>
+<ul><strong>REDIRECT</strong> - Redirects the packet to another address and/or port within the local network.</ul>

@@ -1,0 +1,68 @@
+The <strong>mangle</strong> table in the <strong>PREROUTING</strong> chain - allows you to modify the packet before making a routing decision.<br><br>
+The following actions are available:<br><br>
+
+<ul><strong>TOS</strong> - Sets the value of the Type of Service field in the IP packet header.The --set-tos option tells the TOS manager, 
+what is the TOS value to set for packages that match. The option takes a numeric value, either in hexadecimal
+or decimal form. Since the TOS value consists of 8 bits, the value can be 0-255, or in hexadecimal 0x00-0xFF.<br><br>
+
+<code>iptables -t mangle -A PREROUTING -p TCP --dport 22 -j TOS --set-tos 0x10</code><br><br>
+Also, in the case of IPv4 (iptables), in the --set-tos parameter, you can specify one of the valid symbolic designations: 
+Minimize-Delay (TOS 16, minimum delay requirement), Maximize-Throughput (TOS 8, maximum throughput requirement), 
+Maximize-Reliability (TOS 4, maximum reliability of delivery), Minimize-Cost (TOS 2, minimum cost), 
+Normal-Service (TOS 0, no special requirements). The use of these designations is not prohibited in ip6tables, 
+however, in this case it would be more correct to use the DSCP action<br></ul>
+
+<ul><strong>TTL</strong> - Sets the Time to Live value in the IP packet header.<br><br>
+The following rule will make your gateway invisible to most tracers: <br><br>
+
+<code>iptables -t mangle -I PREROUTING -j TTL --ttl-inc 1</code><br><br>
+
+Note that the operation automatically performed by the kernel network stack to reduce the TTL by one and check for equality to zero
+is performed after the PREROUTING chain, but before the FORWARD chain. Thus, by moving this rule to the FORWARD chain,
+you will ensure the "invisibility" of the gateway following you.</ul>
+<ul><strong>HL</strong> — modifies the Hop Limit field in the IPv6 packet header. It is analogous to the IPv4 TTL action and supports the same operations</ul>
+<ul><strong>MARK</strong> - sets or changes the package marking. Has a single mark option. A simple example,
+which will allocate packages labeled 15:<br> <code>-m mark --mark 15</code><br>
+If a mask is specified, then before comparing with the specified value, the labeling of each packet is combined with this mask
+by means of the logical AND operation, that is, the condition x & mask == value is checked (where x is the labeling of the current packet).
+This approach will allow you to compare the values of individual bits.</ul>
+
+<ul><strong>CONNMARK</strong> - sets or changes the connection marking. Supports the same options as MARK, as well as
+additional options --restore-mark (copies connection marking to package marking) and --save-mark (copies package marking to connection marking)<br><br>
+
+<code>iptables -t mangle -A PREROUTING -i eth0 -m conntrack --ctstate NEW -j CONNMARK --set-mark 1</code><br><br>
+
+Connection labeling allows you to classify a connection as a whole based on information about an individual package. Having selected this package, you
+apply the CONNMARK action to it, and all packages in the connection automatically acquire the marking you have chosen.
+Subsequently, you can, for example, modify these packets in some way, or use this marking for routing or shaping packets.
+Thus, you operate with the connection as a whole. Moreover, this marking is automatically copied to the connections associated with the current one.</ul>
+
+<ul><strong>CLASSIFY</strong> - sets the CBQ class of the package for its subsequent processing by the shaper (option --set-class)</ul>
+<ul><strong>ULOG</strong> - allows you to transmit information about processed packets to special daemons, such as ulogd</ul>
+<ul><strong>NFLOG</strong> is a more versatile version of ULOG, which provides transmission of packet information not directly
+to the netlink socket (as ULOG does), but to a special subsystem - logging backend. For example, the nfnetlink_log backend provides data transfer
+to a netlink socket, that is, NFLOG works with it similarly to ULOG.</ul>
+
+<ul><strong>TCPMSS</strong> — sets the maximum TCP segment size. It can be extremely useful when using a VPN connection
+if the VPN server blocks ICMP messages destination unreachable/fragmentation needed (type 3, code 4), thereby disrupting the operation
+of the Path MTU discovery procedure. From the client's point of view, this problem looks like this: pings pass normally, but when trying to open a web page,
+the browser "freezes". At the same time, everything works fine from the gateway itself. In this case, it is enough to apply the following command on the gateway <br> <br>
+
+<code>iptables -t mangle -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu</code><br><br>
+
+Note that the rule is set in the <strong>FORWARD</strong> chain The rule will automatically set
+the segment size in the TCP headers of SYN and RST, SYN packets in accordance with the minimum MTU values known to our gateway on the packet path.
+For example, if a packet came from the eth0 interface (MTU 1500) and leaves via the ppp0 interface (MTU 1492), and the total size of the network and
+transport layer headers is 40 bytes (20 bytes TCP and 20 bytes IP), it is advisable to set the MSS equal to 1452 bytes.<br><br>
+
+In addition to the ability to automatically select TCP MSS, you can also set the required value manually using the --set-mss value parameter.
+This can be useful if you know that further along the route there are sections with an even smaller MTU, and the edge servers of these
+sections again block ICMP destination unreachable/fragmentation needed.</ul>
+
+<ul><strong>TPROXY</strong> — implements a fully transparent proxying mechanism. This approach differs from the traditional one
+the "transparent" proxying used (the REDIRECT action of the nat table) is that the packet header is not modified
+in any way, including the destination IP address is not replaced (with traditional transparent proxying, it is replaced with the address of the proxying host).<br>
+In addition, fully transparent proxying is transparent from the point of view of both communicating parties. For example, when proxying
+calls from a certain subnet of clients to servers from another subnet, you can make it so that not only clients think that they are accessing servers directly,
+but the servers also "saw" the real source addresses of the clients and could establish reverse connections with them (for example, in the case of active FTP mode).
+With traditional "transparent" proxying, servers can only see the proxy server address.</ul>

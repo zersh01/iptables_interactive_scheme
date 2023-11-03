@@ -1,0 +1,46 @@
+It is used for filtering packets, it is the default table.<br>
+
+<ul><strong>ACCEPT</strong> — skipping the package. The packet leaves the current base chain and follows the flowchart further. 
+Example opening ports 80 and 443: <br><br>
+
+<code>iptables -t filter -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT</code></ul>
+
+<ul><strong>REJECT</strong> — block the package and inform its source about the rejection. 
+By default, a failure is reported by sending an ICMP response packet "icmp-port-unreachable". 
+However, this action supports the --reject-with option, which allows you to specify the wording
+of the rejection message (possible values: icmp-net-unreachable, icmp-host-unreachable, icmp-proto-unreachable,
+icmp-net-forbidden, icmp-host-forbidden). For the TCP protocol, rejection in the form of sending is supported 
+RST packet (--reject-with tcp-reset).</ul>
+
+<ul><strong>DROP</strong> — block the packet without informing the source about the failure. It is more preferable when filtering traffic on interfaces
+connected to the Internet, as it reduces the informativeness of scanning host ports by attackers.</ul><br>
+
+Also of some interest are the actions provided by the modules xtables-addons (currently this project is already included in Debian testing). 
+Some of them are:
+
+<ul><strong>STEAL</strong>— similar to DROP, but if used in the OUTPUT chain, when blocking an outgoing packet, it does not report an error to the application
+that tried to send this packet.</ul>
+
+<ul><strong>TARPIT</strong> — "suspend" the TCP connection. It is used only in the most extreme cases, for example, when fighting DoS attacks. 
+Responds to an incoming connection, then reduces the frame size to zero, blocking the possibility of data transmission. 
+The connection will "hang" in this state until the timeout on the attacking side expires (usually 20-30 minutes). 
+At the same time, the attacking side's system resources (processor time and RAM) are spent on such a connection,
+which can be very noticeable with a significant number of connections. If the TARPIT action is used correctly, 
+the resources of the attacked party are practically not consumed.<br><br>
+
+The correct application means the prevention of processing 
+such connections are made by the conntrack subsystem, since otherwise the system resources of the attacked host itself will be consumed. 
+
+For example, before adding a port blocking rule<br>
+<pre>iptables -I INPUT -p tcp --dport 25 -j TARPIT</pre> 
+be sure to add an appropriate rule to the raw table that prevents the processing of blocked connections by the conntrack subsystem: 
+<pre>iptables -t raw -I PREROUTING -p tcp --dport 25 -j NOTRACK</pre> </ul>
+
+<ul><strong>DELAY</strong> — create the appearance of an open TCP port. It responds to SYN packets with SYN/ACK packets, and RST responds to all other packets. 
+Very useful for misleading an attacker scanning your host's ports.</ul>
+
+<ul><strong>CHAOS</strong>— randomly select one of two actions for each new TCP connection. 
+The first of them is REJECT, the second, depending on the selected option, is either TARPIT (--tarpit) or DELUDE (--delude). 
+In particular, when using the CHAOS --delay action for all unused ports, an attacker scanning your ports 
+it will receive completely incorrect information about the status of your ports. In the case of CHAOS --tarpit, 
+the situation will also be aggravated by "hanging" connections.</ul>

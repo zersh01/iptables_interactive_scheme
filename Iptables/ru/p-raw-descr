@@ -1,0 +1,13 @@
+Таблица <strong>raw</strong>, предназначена для выполнения действий с пакетами до их обработки системой conntrack.<br>
+Доступны следующие действия:<br><br>
+<ul><strong>NOTRACK</strong> -  позволяет предотвратить обработку пакетов системой conntrack <br>
+<br><code>iptables -A PREROUTING -p tcp  -j NOTRACK</code></ul>
+<ul><strong>CT</strong> - более функциональный инструмент. включает поддержку опций: --notrack, --helper, --ctevents,  --zone <br>
+Просто включить:<br><br>
+<code>iptables -t raw -A PREROUTING -j CT</code><br>
+<br>Использовать определённый хелпер<br><br>
+<code>iptables -A PREROUTING -t raw -p tcp --dport 2121 -d 1.2.3.4 -j CT --helper ftp</code></ul>
+<ul><strong>RAWDNAT</strong> — позволяет выполнять «проброс» адресов и портов «сырым» методом<br><br>
+Пример при котором производится подмена, заменяя адреса назначения в пакетах-ответах.<br><br>
+<code>iptables -t raw -A PREROUTING -i eth0 -s 172.18.1.100 -d 192.168.0.0/16 -j RAWDNAT --to-destination 10.125.0.0/16</code><br><br>
+Таким образом, хост 172.18.1.100 будет считать, что к нему обращаются хосты из подести 10.125.0.0/16, а не из 192.168.0.0/16.<br></ul>

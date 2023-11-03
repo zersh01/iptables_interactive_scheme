@@ -1,0 +1,2 @@
+The <strong>POSTROUTING</strong> chain is used to modify data packets after they have been routed, but before they leave the computer.
+

@@ -1,0 +1,6 @@
+Services located on the local node:<br>
+<ul>- ssh </ul>
+<ul>- nginx </ul>
+<ul>- mail </ul>
+<ul>- docker-proxy, etc.</ul>
+

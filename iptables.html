@@ -12,6 +12,10 @@
       <div id="top">
          <button id="button1" onclick="buttonClicked(this)">Транзитный трафик</button>
          <button id="button2" onclick="buttonClicked(this)">Локальный трафик</button>
+         <select id="languageSelect">
+            <option value="ru" selected>RU</option>
+            <option value="en">EN</option>
+         </select>
       </div>
       <div id="middle">
          <div class="svg-container"><!-- SVG контейнер будет здесь --></div>
@@ -26,105 +30,139 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
    <script>
-    //Кнопки направления трафика
-    function buttonClicked(button) {
-       button.classList.toggle('clicked');
-	var button1 = document.getElementById('button1');
-	var button2 = document.getElementById('button2');
-	//Если нажаты обе кнопки - reload страницы
-        if (button1.classList.contains('clicked') && button2.classList.contains('clicked')) {
-    	    location.reload();
+	//Кнопки направления трафика
+	function buttonClicked(button) {
+    	    var button1 = document.getElementById('button1');
+            var button2 = document.getElementById('button2');
+        
+            //Если нажата одна кнопка, отключаем другую, чтобы не было путаницы
+            if (button == button1) {
+                button1.classList.toggle('clicked');
+                if (button1.classList.contains('clicked')) {
+                    button2.disabled = true;
+                } else {
+                    button2.disabled = false;
+                }
+            } else if (button == button2) {
+                button2.classList.toggle('clicked');
+                if (button2.classList.contains('clicked')) {
+                    button1.disabled = true;
+                } else {
+                    button1.disabled = false;
+                }
+            }
         }
-    }
-
-      $(document).ready(function () {
+	$(document).ready(function () {
+	$.ajaxSetup({ cache: false });
 	function changeOpacity(...elementIds) {
-	elementIds.forEach(elementId => {
-    	    var $element = $('#' + elementId);
-    	    var previousOpacity = $element.css('opacity');
+	    elementIds.forEach(elementId => {
+    		var $element = $('#' + elementId);
+    		var previousOpacity = $element.css('opacity');
 
-    	    if (previousOpacity === '0.7') {
-        	// Восстанавливаем предыдущее значение
-        	$element.css('opacity', '0');
-    	    } else {
-        	// Устанавливаем новое значение
-        	$element.css('opacity', '0.7');
-    	    }
+    		if (previousOpacity === '0.7') {
+        	    // Восстанавливаем предыдущее значение
+        	    $element.css('opacity', '0');
+    		} else {
+        	    // Устанавливаем новое значение
+        	    $element.css('opacity', '0.7');
+    		}
 	    });
 	}
-	    // Меняем цвет
-	    function changeStrokeColor(elementIds, color) {
-	        for (var i = 0; i < elementIds.length; i++) {
-    		    var $element = $('#' + elementIds[i]);
-	    	    var previousColor = $element.data('previous-color');
-
-    		    if (previousColor) {
-        		$element.css('stroke', previousColor);
-        		$element.removeData('previous-color');
-    		    } else {
-        		$element.data('previous-color', $element.css('stroke'));
-        		$element.css('stroke', color);
-    		    }
-		}
+	// Меняем цвет
+	function changeStrokeColor(elementIds, color) {
+	    for (var i = 0; i < elementIds.length; i++) {
+    		var $element = $('#' + elementIds[i]);
+		var previousColor = $element.data('previous-color');
+    		if (previousColor) {
+        	    $element.css('stroke', previousColor);
+        	    $element.removeData('previous-color');
+    		} else {
+        	    $element.data('previous-color', $element.css('stroke'));
+        	    $element.css('stroke', color);
+    		}
 	    }
+	}
 
-	    // Меняем толщину 
-	    function changeStrokeWidth(...elementIds) {
-    		elementIds.forEach(function(elementId) {
-        	    var $element = $('#' + elementId);
-        	    var previousStrokeWidth = $element.css('stroke-width');
+	// Меняем толщину 
+	function changeStrokeWidth(...elementIds) {
+    	    elementIds.forEach(function(elementId) {
+    	        var $element = $('#' + elementId);
+        	var previousStrokeWidth = $element.css('stroke-width');
 
         	    if (previousStrokeWidth === '1px') {
-            	    // Восстанавливаем предыдущее значение
+            		// Восстанавливаем предыдущее значение
             		$element.css('stroke-width', '0.248026');
         	    } else {
             		// Устанавливаем новое значение
             		$element.css('stroke-width', '1px');
         	    }
-    		});
-	    }
-	    //no cache 
-            var timestamp = new Date().getTime();
-	    $.get("iptables.svg?time=" + timestamp, function (data) {
-		var $svg = $(data).find('svg');
-		var paths = $svg.find('path');
-	        var svgWidth = $svg.width();
+    	    });
+	}
 
-                // Устанавливаем ширину контейнера по ширене схемы
-                $('#description-container').css('max-width', svgWidth + 'px');
+        //no cache 
+        var timestamp = new Date().getTime();
+        $.get("iptables.svg?time=" + timestamp, function (data) {
+            var $svg = $(data).find('svg');
+            var paths = $svg.find('path');
+            var svgWidth = $svg.width();
 
-	       paths.each(function (index) {
-		 var dataValue = $(this).attr('data');
-	          $(this).attr('data-toggle', 'tooltip');
-	          $(this).attr('data-placement', 'top');
-	          $(this).attr('title', dataValue);
-		  $(this).click(function() {
-		   var description = $(this).attr('description');
-		   $('#description-container').html(description);
-                   $('#information-title').hide();
-		   });
+            // Устанавливаем ширину контейнера по ширене схемы
+            $('#description-container').css('max-width', svgWidth + 'px');
+            
+	    $('#languageSelect').change(function() {
+	        var selectedLanguage = $(this).val(); // Получаем выбранный язык при изменении
+
+		paths.each(function (index) {
+        	var name = $(this).attr('inkscape:label');
+        	    if (name) { // проверяем, что name определено
+            		var dataFile = 'Iptables/' + selectedLanguage + '/' + name + '-data'; // Используем выбранный язык
+            		var descrFile = 'Iptables/' + selectedLanguage + '/' + name + '-descr'; // Используем выбранный язык
+            		var $this = $(this); // сохраняем ссылку на текущий объект
+
+			$(document).on('mousemove', function(e) {
+			    var mouseX = e.clientX,
+			    mouseY = e.clientY;
+
+			    //for debug     
+			    //console.log(mouseX, mouseY);
+			    $('.tooltip').css({
+			        top: mouseY - 20,
+			        left: mouseX + 10
+			    });
+			});
+
+			var dataPromise = $.get(dataFile); // Создаем промис для загрузки данных
+
+			dataPromise.done(function(data) {
+			    $this.tooltip('dispose'); // Уничтожаем старый tooltip
+			    $this.attr('title', data); // Обновляем данные
+			    $this.tooltip({trigger: 'hover', container: 'body', placement: 'top', html: true, boundary: 'viewport'}); // Инициализируем новый tooltip
+			});
+
+			$this.off('click').click(function() { // Удаляем предыдущий обработчик клика
+	    		    // Загрузка данных для tooltip
+			    $.get(dataFile, function (data) {
+				$this.tooltip('dispose'); // Уничтожаем старый tooltip
+				$this.attr('data-toggle', 'tooltip');
+				$this.attr('data-placement', 'top');
+				$this.attr('title', data);
+			    });
+			});
+    			// Загрузка данных для описания
+    			$this.click(function() {
+        		    $.get(descrFile, function (description) {
+            			$('#description-container').html(description);
+            			$('#information-title').hide();
+        		    });
+    			});
+		    }
 		});
+	    }).change(); // Вызываем событие change сразу после загрузки страницы, чтобы установить начальный язык
 
-	    $('.svg-container').replaceWith($svg);
+            $('.svg-container').replaceWith($svg);
 
-	    $('[data-toggle="tooltip"]').tooltip({
-	      trigger: 'hover',
-	      container: 'body',
-	      placement: 'top',
-	      html: true,
-	      boundary: 'viewport'
-	   });
+        }, 'xml');
 
-	   $('[data-toggle="tooltip"]').on('mousemove', function(e) {
-	      var mouseX = e.clientX,
-	      mouseY = e.clientY;
-
-	      $('.tooltip').css({
-	         top: mouseY - 20,
-	         left: mouseX + 10
-	      });
-	   });
-	}, 'xml');
       
          $('#top button').on('click', function() {
 	    //Transit traffic
@@ -132,7 +170,7 @@
 		//Прозрачность
                changeOpacity('path870-5-1','path870-2-8','path870-7-9','path2968','path2625','path2643','path870-2-0','path870-3-75','path870-5-9-23','path870-22');
 
-		//Color arrow
+		//Цвет стрелок
 	       changeStrokeColor(
 		    [
 			'path63094','path42369-0-5','path42369-0-5-7','path42889','path49110-7-3-0','path46227','path52951','path46283','rect167',

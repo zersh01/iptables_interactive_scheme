@@ -1,0 +1,26 @@
+The <strong>nat</strong> table in the <strong>PREROUTING</strong> chain - packets get into this chain before making a routing decision.<br><br>
+
+In fact, the term "routing decision" implies dividing traffic into incoming (intended for the host itself) and
+transit (going through this host to other hosts). It is at this stage that it is necessary to perform forwarding operations (DNAT, REDIRECT, NETMAP). 
+
+Available actions:<br>
+
+<ul><strong>DNAT</strong> (Destination NAT) - This action allows you to change the destination address or port of the packet when it passes 
+through the PREROUTING chain. As a result, the packet will be redirected to another destination address and/or port. 
+For example, you can use DNAT to redirect incoming network traffic to another server or port.<br>
+Example of using DNAT:<br><br>
+<pre> iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.1.100:8080 </pre></ul>
+
+<ul><strong>REDIRECT</strong> - This action allows you to redirect packets to local ports on the same host, 
+where the packet passes through the PREROUTING chain. This is useful when configuring proxy servers or port forwarding at the local level.<br> 
+
+Example of using REDIRECT:<br><br> 
+<pre> iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80 </pre></ul>
+
+<ul><strong>NETMAP</strong> is an additional extension of iptables that allows you to change the IP addresses of packets for
+networks using special cards. This will be useful, for example, when redirecting packets between different private networks.<br>
+
+Example of using NETMAP:<br><br> 
+<pre> iptables -t nat -A PREROUTING -d 192.168.0.0/24 -j NETMAP --to 172.16.0.0/24 </pre></ul>
+
+

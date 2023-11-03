@@ -1,0 +1,4 @@
+Processing host transit traffic for<br>
+<ul>- Docker-net (not to be confused with docker-proxy)</ul>
+<ul>- lxc-net</ul>
+<ul>- other servers on the network</ul>

@@ -1,0 +1,28 @@
+It uses <strong>conntrack</strong>, a netfilter component that provides connection status tracking and
+packet classification in terms of connection membership, which allows netfilter to perform full-fledged stateful traffic filtering. 
+Like netfilter, the conntrack system is part of the Linux kernel. <br><br>
+
+Tasks:<br>
+<ul>Tracking the states of individual connections in order to classify each packet either as belonging to
+an already established connection or as opening a new connection. At the same time, the concept of "connection state" is artificially introduced 
+for protocols in which it is initially absent (UDP, ICMP). When working with protocols
+that support states (for example, TCP), conntrack actively uses this feature, closely interacting with the basic network subsystem of the Linux kernel.</ul>
+
+<ul>Tracking of related connections, for example, ICMP responses to TCP and UDP packets. A more complex option is protocols that use multiple
+connections in one session, for example, FTP. For proper processing of such protocols, conntrack uses special modules (conntrack helpers), 
+which analyze traffic and "snatch" protocol information about new connections (for example, the port to which it will be opened),
+which allows them to be correctly filtered, routed, shaped and passed through NAT.</ul>
+
+<br> To interact with the conntrack system from userspace, the conntrack-tools kit has been developed, containing two utilities:
+
+<ul><strong>conntrack</strong> — a tool that allows the system administrator to observe the connection status tables and 
+interact with them: clear tables entirely, delete individual records, mark connections manually (analogous to the CONNMARK action),
+set connection timeouts. Output filtering is supported (for example, based on source and/or destination addresses and/or ports),
+as well as output in various formats, including XML. In addition, this utility allows you to monitor
+conntrack system events in real time, for example, opening new connections or changing the status of existing ones.</ul>
+
+<ul><strong>conntrackd</strong> is a daemon that provides synchronization of state tables with other hosts, which in combination
+with the capabilities of the keepalived daemon allows you to create firewalls on high Availability clusters — if
+one of the cluster hosts fails, its connections will be "picked up" by other cluster hosts and correctly processed taking into account the states. 
+conntrackd can also be used simply to remotely collect statistics on connections.</ul>
+
