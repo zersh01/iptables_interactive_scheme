@@ -15,7 +15,9 @@
 Вы можете прислать свою локализацию, добавив  перевод по следующему пути: Iptables/lang_name
 
 Имена файлов означают тип сообщения который для которого они предназначены:
+
 *-data - для всплывающих подсказок
+
 *-descr - расширенное описание под схемой
 
 
@@ -37,5 +39,7 @@ Basic files:
 You can send your localization by adding a translation along the following path: Iptables/lang_name
 
 The file names indicate the type of message that they are intended for:
+
 *-data - for tooltips
+
 *-descr - extended description under the diagram
