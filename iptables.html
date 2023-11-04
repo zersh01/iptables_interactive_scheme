@@ -52,6 +52,19 @@
                 }
             }
         }
+	// Функция для загрузки текста кнопки
+	function loadButtonText(id, selectedLanguage) {
+    	    var ButtonText = 'Iptables/' + selectedLanguage + '/' + id;
+
+	    // Загрузка текста кнопки
+	    fetch(ButtonText)
+    	    .then(response => response.text())
+    	    .then(data => {
+        	document.getElementById(id).innerText = data;
+    	    })
+    	    .catch(error => console.error('Ошибка:', error));
+	}
+
 	$(document).ready(function () {
 	$.ajaxSetup({ cache: false });
 	function changeOpacity(...elementIds) {
@@ -157,6 +170,22 @@
     			});
 		    }
 		});
+
+		//Загрузка начального пояснительного текста под схемой
+		var id = 'information-title';
+	        var InfoText = 'Iptables/' + selectedLanguage + '/' + id;
+
+	        // Загрузка текста из файла
+	        fetch(InfoText)
+	            .then(response => response.text())
+	            .then(data => {
+        		// Применение загруженного текста к элементу
+	        	document.getElementById(id).innerText = data;
+	            }).catch(error => console.error('Ошибка:', error));
+
+		// Загрузка текста для каждой кнопки
+		loadButtonText('button1', selectedLanguage);
+		loadButtonText('button2', selectedLanguage);
 	    }).change(); // Вызываем событие change сразу после загрузки страницы, чтобы установить начальный язык
 
             $('.svg-container').replaceWith($svg);
