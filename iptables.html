@@ -10,10 +10,10 @@
 <body>
    <div id="container">
       <div id="top">
-         <button id="button1" onclick="buttonClicked(this)">Транзитный трафик</button>
-         <button id="button2" onclick="buttonClicked(this)">Локальный трафик</button>
+         <button id="button1" onclick="buttonClicked(this)"></button>
+         <button id="button2" onclick="buttonClicked(this)"></button>
          <select id="languageSelect">
-            <option value="ru" selected>RU</option>
+            <option value="ru">RU</option>
             <option value="en">EN</option>
          </select>
       </div>
@@ -21,7 +21,7 @@
          <div class="svg-container"><!-- SVG контейнер будет здесь --></div>
       </div>
      <div id="comment">
-       	<h2 id="information-title">Нажмите на таблицу или цепочку для дополнительной информации</h2>
+       	<h2 id="information-title"></h2>
 	<div id="description-container"></div>
      </div>
    </div>
@@ -30,6 +30,14 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
    <script>
+	//Автоматическое определение языка при запуске
+	window.onload = function() {
+    	    var userLang = navigator.language || navigator.userLanguage; 
+    	    userLang = userLang.substr(0, 2); // получаем первые две буквы языка
+    	    var select = document.getElementById('languageSelect');
+    	    select.value = userLang; // устанавливаем значение select в язык пользователя
+        }
+
 	//Кнопки направления трафика
 	function buttonClicked(button) {
     	    var button1 = document.getElementById('button1');
