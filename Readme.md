@@ -1,6 +1,6 @@
 # Интерактивное описание таблиц iptables.
 
-# Demo: https://zersh01.github.io/iptables_interactive_scheme/
+Demo: https://zersh01.github.io/iptables_interactive_scheme/
 
 Основные файлы:
 
@@ -29,7 +29,7 @@ Description
 
 # Interactive description of iptables tables.
 
-# Demo: https://zersh01.github.io/iptables_interactive_scheme/
+Demo: https://zersh01.github.io/iptables_interactive_scheme/
 
 Basic files:
 
