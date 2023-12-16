@@ -3,20 +3,37 @@
 <ul><strong>ACCEPT</strong> — пропуск пакета. Пакет покидает текущую базовую цепочку и следует дальше по потоковой диаграмме. 
 Пример открывающий порты 80 и 443: <br><br>
 
-<code>iptables -t filter -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT</code></ul>
+<code>iptables -t filter -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT</code><br><br>
+
+Разрешить icmp:<br><br>
+<code>iptables -t filter -A INPUT -p icmp -j ACCEPT</code><br><br>
+
+Разрешить любой трафик на интерфейсе eth0: <br><br>
+<code>iptables -t filter -A INPUT -i eth0 -j ACCEPT</code><br><br>
+
+Разрешить доступ к порту ssh только из сети 192.168.1.0/24: <br><br>
+<code>iptables -t filter -A INPUT -p tcp -s 192.168.1.0/24 --dport 22  -j ACCEPT</code></ul>
 
 <ul><strong>REJECT</strong> — заблокировать пакет и сообщить его источнику об отказе. 
 По умолчанию об отказе сообщается отправкой ответного ICMP-пакета «icmp-port-unreachable». 
 Однако, это действие поддерживает опцию --reject-with, позволяющую указать формулировку 
 сообщения об отказе (возможные значения: icmp-net-unreachable, icmp-host-unreachable, icmp-proto-unreachable, 
 icmp-net-prohibited, icmp-host-prohibited). Для протокола TCP поддерживается отказ в форме отправки 
-RST-пакета (--reject-with tcp-reset).</ul>
+RST-пакета (--reject-with tcp-reset).
+
+Пример для порта 1234: <br><br>
+<code>iptables -t filter -A INPUT -p tcp --dport 1234 -j REJECT --reject-with tcp-reset</code></ul>
+
 <ul><strong>DROP</strong> — заблокировать пакет, не сообщая источнику об отказе. Более предпочтительна при фильтрации трафика на интерфейсах, 
-подключенных к интернету, так как понижает информативность сканирования портов хоста злоумышленниками.</ul><br>
+подключенных к интернету, так как понижает информативность сканирования портов хоста злоумышленниками.<br> <br>
+
+DROP может быть лучше для скрытой защиты и минимизации трафика, в то время как REJECT 
+может быть лучше для активного уведомления отправителей об отклонении их пакетов. 
+Выбор между ними зависит от вашей ситуации и стратегии безопасности.<br><br>
 
 Также определенный интерес представляют действия, предоставляемые модулями 
 xtables-addons (в настоящее время этот проект уже включен в Debian testing). Некоторые из них:
-
+</ul>
 <ul><strong>STEAL</strong>— аналогично DROP, но в случае использования в цепочке OUTPUT при блокировании исходящего пакета не сообщает об ошибке приложению, 
 пытавшемуся отправить этот пакет.</ul>
 <ul><strong>TARPIT</strong> — «подвесить» TCP-соединение. Используется лишь в самых крайних случаях, например, при борьбе с DoS-атаками. 
