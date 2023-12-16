@@ -2,21 +2,36 @@ It is used for filtering packets, it is the default table.<br>
 
 <ul><strong>ACCEPT</strong> — skipping the package. The packet leaves the current base chain and follows the flowchart further. 
 Example opening ports 80 and 443: <br><br>
+<code>iptables -t filter -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT</code><br><br>
 
-<code>iptables -t filter -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT</code></ul>
+Allow icmp:<br><br>
+<code>iptables -t filter -A INPUT -p icmp -j ACCEPT</code><br><br>
+
+Allow any traffic on the eth0 interface:<br><br>
+<code>iptables -t filter -A INPUT -i eth0 -j ACCEPT</code><br><br>
+
+Allow ssh port access only from network 192.168.1.0/24:<br><br>
+<code>iptables -t filter -A INPUT -p tcp -s 192.168.1.0/24 --dport 22  -j ACCEPT</code></ul>
 
 <ul><strong>REJECT</strong> — block the package and inform its source about the rejection. 
 By default, a failure is reported by sending an ICMP response packet "icmp-port-unreachable". 
 However, this action supports the --reject-with option, which allows you to specify the wording
 of the rejection message (possible values: icmp-net-unreachable, icmp-host-unreachable, icmp-proto-unreachable,
 icmp-net-forbidden, icmp-host-forbidden). For the TCP protocol, rejection in the form of sending is supported 
-RST packet (--reject-with tcp-reset).</ul>
+RST packet (--reject-with tcp-reset).<br><br>
+
+Example for port 1234:
+<code>iptables -t filter -A INPUT -p tcp --dport 1234 -j REJECT --reject-with tcp-reset</code></ul>
 
 <ul><strong>DROP</strong> — block the packet without informing the source about the failure. It is more preferable when filtering traffic on interfaces
-connected to the Internet, as it reduces the informativeness of scanning host ports by attackers.</ul><br>
+connected to the Internet, as it reduces the informativeness of scanning host ports by attackers.<br><br>
+
+DROP may be better for covert protection and minimizing traffic, while REJECT
+it may be better to actively notify senders of the rejection of their packages. 
+The choice between them depends on your situation and security strategy.
 
 Also of some interest are the actions provided by the modules xtables-addons (currently this project is already included in Debian testing). 
-Some of them are:
+Some of them are:</ul>
 
 <ul><strong>STEAL</strong>— similar to DROP, but if used in the OUTPUT chain, when blocking an outgoing packet, it does not report an error to the application
 that tried to send this packet.</ul>
