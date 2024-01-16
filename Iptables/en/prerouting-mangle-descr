@@ -66,3 +66,17 @@ In addition, fully transparent proxying is transparent from the point of view of
 calls from a certain subnet of clients to servers from another subnet, you can make it so that not only clients think that they are accessing servers directly,
 but the servers also "saw" the real source addresses of the clients and could establish reverse connections with them (for example, in the case of active FTP mode).
 With traditional "transparent" proxying, servers can only see the proxy server address.</ul>
+
+<ul><strong>TEE</strong> - this is an option in iptables that is used to copy packets from one interface to another. 
+It is applied in the PREROUTING and POSTROUTING chains in the mangle table.<br><br>
+
+When you use -j TEE, you also need to specify the IP address of the target node using the --gateway option. 
+All packets passing through the chain where this rule is applied will be copied and sent to the specified gateway, 
+but the original packet will still be sent in its original direction. <br><br>
+
+This is useful, for example, when you want to analyze traffic in real time without interrupting its transmission.
+
+<code>
+iptables -t mangle -A PREROUTING -j TEE --gateway 10.0.0.1<br>
+iptables -t mangle -A POSTROUTING -j TEE --gateway 10.0.0.1
+</code></ul>
