@@ -7,6 +7,9 @@ Support lang:
 
 Demo: https://zersh01.github.io/iptables_interactive_scheme/
 
+***Известная проблема***: в github-pages не работают примеры extensions. 
+Для изучения вам необходимо склонировать репозиторий к себе.
+
 Основные файлы:
 
 - iptables.html - разметка
@@ -51,6 +54,10 @@ REJECTv4_input_forward_output
 ## Interactive description of iptables tables.
 
 Demo: https://zersh01.github.io/iptables_interactive_scheme/
+
+***Known issue***: extensions examples don't work in github-pages. 
+You need to bend the repository to yourself to explore.
+
 
 Basic files:
 
