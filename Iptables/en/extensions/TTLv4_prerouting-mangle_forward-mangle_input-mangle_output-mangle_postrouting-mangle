@@ -1,0 +1,15 @@
+TTL (IPv4-specific)
+This is used to modify the IPv4 TTL header field. The TTL field determines how many hops (routers) 
+a packet can traverse until it's time to live is exceeded.
+
+Setting or incrementing the TTL field can potentially be very dangerous, 
+so it should be avoided at any cost. This target is only valid in mangle table.
+
+Don't ever set or increment the value on packets that leave your local network!
+
+--ttl-set value
+Set the TTL value to `value'.
+--ttl-dec value
+Decrement the TTL value `value' times.
+--ttl-inc value
+Increment the TTL value `value' times.

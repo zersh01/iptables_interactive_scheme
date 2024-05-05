@@ -1,0 +1,20 @@
+<strong>DNPT (IPv6-specific)</strong><br><br>
+Provides stateless destination IPv6-to-IPv6 Network Prefix Translation (as described by RFC 6296).
+You have to use this target in the mangle table, not in the nat table. It takes the following options:
+
+<ul><strong>--src-pfx [prefix/length]</strong> - Set source prefix that you want to translate and length</ul>
+<ul><strong>--dst-pfx [prefix/length]</strong> - Set destination prefix that you want to use in the translation and length
+You have to use the SNPT target to undo the translation. 
+</ul>
+Example:
+<ul>
+ip6tables -t mangle -I POSTROUTING -s fd00::/64 -o vboxnet0 -j SNPT --src-pfx fd00::/64 --dst-pfx 2001:e20:2000:40f::/64
+ip6tables -t mangle -I PREROUTING -i wlan0 -d 2001:e20:2000:40f::/64 -j DNPT --src-pfx 2001:e20:2000:40f::/64 --dst-pfx fd00::/64
+</ul>
+
+You may need to enable IPv6 neighbor proxy:
+
+<ul>sysctl -w net.ipv6.conf.all.proxy_ndp=1</ul>
+
+You also have to use the NOTRACK target to disable connection tracking for translated flows.
+

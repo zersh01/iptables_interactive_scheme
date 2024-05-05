@@ -1,0 +1,10 @@
+This target marks packets so that the kernel will log every rule which match the packets
+ as those traverse the tables, chains, rules. It can only be used in the raw table.
+With iptables-legacy, a logging backend, such as ipt_LOG or nfnetlink_log, must be loaded 
+for this to be visible. The packets are logged with the string prefix: "TRACE: tablename:chainname:type:rulenum "
+where type can be "rule" for plain rule, "return" for implicit rule at the end of a user 
+defined chain and "policy" for the policy of the built in chains.
+
+With iptables-nft, the target is translated into nftables' meta nftrace expression. 
+Hence the kernel sends trace events via netlink to userspace where they may be 
+displayed using xtables-monitor --trace command. For details, refer to xtables-monitor(8).  

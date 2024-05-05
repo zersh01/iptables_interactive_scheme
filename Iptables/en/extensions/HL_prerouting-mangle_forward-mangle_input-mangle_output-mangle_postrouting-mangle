@@ -1,0 +1,11 @@
+<strong>HL (IPv6-specific)</strong>
+This is used to modify the Hop Limit field in IPv6 header. The Hop Limit field is similar to 
+what is known as TTL value in IPv4. Setting or incrementing the Hop Limit field can potentially be very dangerous, 
+so it should be avoided at any cost. This target is only valid in mangle table.<br><br>
+
+Don't ever set or increment the value on packets that leave your local network!
+
+<ul><strong>--hl-set value </strong> - Set the Hop Limit to `value'.</ul>
+<ul><strong>--hl-dec value </strong> - Decrement the Hop Limit `value' times.</ul>
+<ul><strong>--hl-inc value </strong> - Increment the Hop Limit `value' times.</ul>
+

@@ -77,7 +77,23 @@ body {
     max-width: 250px;
 }
 
-/* style.css */
 .clicked {
    background-color: lightblue; 
+}
+/*Extentions baloon*/
+.custom-tooltip {
+    display: none;
+    position: absolute;
+    padding: 8px;
+    border: 1px solid #d3d3d3;
+    z-index: 1000;
+    width: 200px; 
+    top: 75px; /* Опускаем ниже */
+    font-size: 14px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#extensionSelect:hover + .custom-tooltip {
+    display: block;
 }

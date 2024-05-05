@@ -3,6 +3,8 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="keywords" content="iptables, iptables visual scheme">
+   <meta name="author" content="zersh">
    <title>Iptables interactive scheme</title>
 
    <link rel="stylesheet" href="styles.css">
@@ -11,7 +13,13 @@
    <div id="container">
       <div id="top">
          <button id="button1" onclick="buttonClicked(this)"></button>
-         <button id="button2" onclick="buttonClicked(this)"></button>
+         <button id="button2" onclick="buttonClicked(this)" style="margin-right: 10px;"></button>
+         <span>Extension:</span> 
+	 <select id="extensionSelect" style="margin-right: 10px;">
+            <option value="none">None</option>
+	 </select>
+	<div id="extensionTooltip" class="custom-tooltip">Загрузка...</div>
+         <span>Lang:</span> 
          <select id="languageSelect">
             <option value="ru">RU</option>
             <option value="en">EN</option>
@@ -74,6 +82,63 @@
 	}
 
 	$(document).ready(function () {
+	var previousElements = [];
+
+	function resetPreviousColorsAndWidths() {
+	    if (previousElements.length > 0) {
+	        changeStrokeColor(previousElements, 'initial'); // Сброс цвета к начальному
+	        changeStrokeWidth(previousElements, 'initial'); // Сброс толщины к начальной
+	        previousElements = [];
+    	    }
+	}
+
+	function loadExtensions(language) {
+    	    var path = 'Iptables/' + language + '/extensions/';
+            $.ajax({
+                url: path,
+                success: function (data) {
+                    var files = $(data).find("a");
+                    $("#extensionSelect").empty(); // Очищаем текущие опции
+                    $("#extensionSelect").append($('<option value="none">None</option>')); // Добавляем опцию "None"
+                    files.each(function () {
+                        var href = this.href;
+                        var filename = href.substring(href.lastIndexOf('/') + 1); // Получаем только имя файла
+                        if (filename.indexOf('.') === -1 && filename.indexOf('baloon') === -1) {
+                            var parts = filename.split('_');
+                            var label = parts[0];
+                            var values = parts.slice(1); // Собираем все labels
+                            $("#extensionSelect").append($('<option></option>').val(filename).text(label));
+                        }
+                    });
+                }
+            });
+        }
+
+        $('#languageSelect').change(function () {
+            var selectedLanguage = $(this).val();
+            loadExtensions(selectedLanguage);    // Загружаем расширения для выбранного языка
+            resetPreviousColorsAndWidths();      // Сброс предыдущих изменений цвета и толщины
+            loadAndSetTooltip(selectedLanguage); // Загружаем и устанавливаем подсказку для выбранного языка
+        }).change();                             // Вызываем сразу после загрузки страницы
+    
+        $('#extensionSelect').change(function () {
+        resetPreviousColorsAndWidths();         // Сброс предыдущих изменений цвета и толщины
+        var selectedValue = $(this).val();
+        if (selectedValue !== 'none') {
+            var selectedElements = selectedValue.split('_');
+            changeStrokeWidth(selectedElements, '2px');  // Выделяем таблицу или цепочку
+            previousElements = selectedElements.slice(); // Сохраняем текущие элементы для возможного сброса
+            // Загрузка и отображение содержимого файла
+            var filePath = 'Iptables/' + $('#languageSelect').val() + '/extensions/' + selectedValue;
+            $.get(filePath, function(data) {
+		$('#description-container').html(data); // Отображаем содержимое файла в div
+		$('#information-title').hide();         // Очищаем содержимое в div
+            });
+            } else {
+                $('#comment').html(''); // Очищаем div, если выбрано "None"
+            }
+        });
+    
 	$.ajaxSetup({ cache: false });
 	function changeOpacity(...elementIds) {
 	    elementIds.forEach(elementId => {
@@ -81,11 +146,9 @@
     		var previousOpacity = $element.css('opacity');
 
     		if (previousOpacity === '0.7') {
-        	    // Восстанавливаем предыдущее значение
-        	    $element.css('opacity', '0');
+        	    $element.css('opacity', '0');   // Восстанавливаем предыдущее значение
     		} else {
-        	    // Устанавливаем новое значение
-        	    $element.css('opacity', '0.7');
+        	    $element.css('opacity', '0.7'); // Устанавливаем новое значение
     		}
 	    });
 	}
@@ -105,22 +168,27 @@
 	}
 
 	// Меняем толщину 
-	function changeStrokeWidth(...elementIds) {
-    	    elementIds.forEach(function(elementId) {
-    	        var $element = $('#' + elementId);
-        	var previousStrokeWidth = $element.css('stroke-width');
-
-        	    if (previousStrokeWidth === '1px') {
-            		// Восстанавливаем предыдущее значение
-            		$element.css('stroke-width', '0.248026');
-        	    } else {
-            		// Устанавливаем новое значение
-            		$element.css('stroke-width', '1px');
-        	    }
-    	    });
+	function changeStrokeWidth(elementIds, newWidth) {
+	    elementIds.forEach(function(elementId) {
+	        var $element = $('#' + elementId);
+	        if (newWidth === 'initial') {
+	            // Восстанавливаем сохраненное исходное значение толщины
+	            var originalWidth = $element.data('original-stroke-width');
+	            if (originalWidth) {
+	                $element.css('stroke-width', originalWidth);
+	            }
+	        } else {
+	            // Сохраняем исходное значение толщины, если оно еще не сохранено
+	            if (!$element.data('original-stroke-width')) {
+	                $element.data('original-stroke-width', $element.css('stroke-width'));
+	            }
+	            // Устанавливаем новую толщину
+	            $element.css('stroke-width', newWidth);
+	        }
+	    });
 	}
 
-        //no cache 
+        //no cache - чтобы загружать всегда актальные данные
         var timestamp = new Date().getTime();
         $.get("iptables.svg?time=" + timestamp, function (data) {
             var $svg = $(data).find('svg');
@@ -136,16 +204,15 @@
 		paths.each(function (index) {
         	var name = $(this).attr('inkscape:label');
         	    if (name) { // проверяем, что name определено
-            		var dataFile = 'Iptables/' + selectedLanguage + '/' + name + '-data'; // Используем выбранный язык
-            		var descrFile = 'Iptables/' + selectedLanguage + '/' + name + '-descr'; // Используем выбранный язык
+            		var dataFile = 'Iptables/' + selectedLanguage + '/' + name + '-data';   // Всплывающее описание
+            		var descrFile = 'Iptables/' + selectedLanguage + '/' + name + '-descr'; // Текст(description)
             		var $this = $(this); // сохраняем ссылку на текущий объект
 
 			$(document).on('mousemove', function(e) {
 			    var mouseX = e.clientX,
 			    mouseY = e.clientY;
 
-			    //for debug     
-			    //console.log(mouseX, mouseY);
+			    //console.log(mouseX, mouseY);  //for debug     
 			    $('.tooltip').css({
 			        top: mouseY - 20,
 			        left: mouseX + 10
@@ -155,8 +222,8 @@
 			var dataPromise = $.get(dataFile); // Создаем промис для загрузки данных
 
 			dataPromise.done(function(data) {
-			    $this.tooltip('dispose'); // Уничтожаем старый tooltip
-			    $this.attr('title', data); // Обновляем данные
+			    $this.tooltip('dispose');      // Уничтожаем старый tooltip
+			    $this.attr('title', data);     // Обновляем данные
 			    $this.tooltip({trigger: 'hover', container: 'body', placement: 'top', html: true, boundary: 'viewport'}); // Инициализируем новый tooltip
 			});
 
@@ -187,20 +254,17 @@
 	        fetch(InfoText)
 	            .then(response => response.text())
 	            .then(data => {
-        		// Применение загруженного текста к элементу
-	        	document.getElementById(id).innerText = data;
+	        	document.getElementById(id).innerText = data;	// Применение загруженного текста к элементу
 	            }).catch(error => console.error('Ошибка:', error));
 
-		// Загрузка текста для каждой кнопки
-		loadButtonText('button1', selectedLanguage);
+		loadButtonText('button1', selectedLanguage); 		// Загрузка текста для каждой кнопки
 		loadButtonText('button2', selectedLanguage);
 	    }).change(); // Вызываем событие change сразу после загрузки страницы, чтобы установить начальный язык
 
             $('.svg-container').replaceWith($svg);
 
         }, 'xml');
-
-      
+  
          $('#top button').on('click', function() {
 	    //Transit traffic
 	    if ($(this).is(':first-child')) {
@@ -210,12 +274,12 @@
 		//Цвет стрелок
 	       changeStrokeColor(
 		    [
-			'path63094','path42369-0-5','path42369-0-5-7','path42889','path49110-7-3-0','path46227','path52951','path46283','rect167',
-			'rect167-5-6','rect167-5-0','path49110-7-3-0-9' 
+			'path63094','path42369-0-5','path42369-0-5-7','path42889','path49110-7-3-0','path46227','path52951','path46283','prerouting',
+			'forward','postrouting','path49110-7-3-0-9' 
 		    ], 'rgb(220,20,60)');
 
 	      //Prerouting/Forward/Postrouting/ bold
-	      changeStrokeWidth('rect167','rect167-5-6','rect167-5-0');
+	      changeStrokeWidth('prerouting','forward','postrouting');
             } else {
 		//Local traffic
                changeOpacity('path870-5-9','path870-2','path2635');
@@ -224,14 +288,26 @@
 	       changeStrokeColor(
 		[
 		    'path63094','path42369-0-5','path42369-0-5-7','path42889','path42369-7','path42369-7','path42369-7','path46403','path46403-2',
-		    'path49110','path49110-7','path49110-7-3','path49110-7-3-8','path49110-7-3-84','path49110-7-3-4','rect167',
-		    'rect167-5','rect167-2','rect165-6','rect167-5-0','path49110-7-3-0','path49110-7-3-0-9'
+		    'path49110','path49110-7','path49110-7-3','path49110-7-3-8','path49110-7-3-84','path49110-7-3-4','prerouting',
+		    'input','output','local-process','postrouting','path49110-7-3-0','path49110-7-3-0-9'
 		],'rgb(220,20,60)');
 
 		//Input/Output/LocalProc bold
-	        changeStrokeWidth('rect167','rect167-5','rect167-2','rect165-6','rect167-5-0');
+	        changeStrokeWidth('prerouting','input','output','local-process','postrouting');
             }
          });
+
+         function loadAndSetTooltip(language) {
+             var tooltipPath = 'Iptables/' + language + '/extensions/baloon';
+
+             fetch(tooltipPath)
+                      .then(response => response.text())
+                      .then(data => {
+                     // Установка текста всплывающего окна
+                     document.getElementById('extensionTooltip').textContent = data;
+                 })
+                 .catch(error => console.error('Error load baloon tooltip:', error));
+         }
       });
    </script>
 </body>

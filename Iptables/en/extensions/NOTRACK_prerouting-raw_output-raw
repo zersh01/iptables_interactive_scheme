@@ -1,0 +1,2 @@
+This extension disables connection tracking for all packets matching that rule. 
+It is equivalent with -j CT --notrack. Like CT, NOTRACK can only be used in the raw table.  

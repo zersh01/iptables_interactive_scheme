@@ -1,0 +1,10 @@
+This target is used to set the Netfilter mark value associated with the packet. <br><br>
+It can, for example, be used in conjunction with routing based on fwmark (needs iproute2). 
+If you plan on doing so, note that the mark needs to be set in the <strong>PREROUTING</strong> chain of 
+the <strong>mangle</strong> table to affect routing. The mark field is 32 bits wide.
+<ul><strong>--set-xmark value[/mask]</strong> - Zeroes out the bits given by mask and XORs value into the packet mark ("nfmark"). If mask is omitted, 0xFFFFFFFF is assumed.</ul>
+<ul><strong>--set-mark value[/mask]</strong> - Zeroes out the bits given by mask and ORs value into the packet mark. If mask is omitted, 0xFFFFFFFF is assumed.</ul>
+The following mnemonics are available:
+<ul><strong>--and-mark bits </strong> - Binary AND the nfmark with bits. (Mnemonic for --set-xmark 0/invbits, where invbits is the binary negation of bits.)</ul>
+<ul><strong>--or-mark bits </strong> - Binary OR the nfmark with bits. (Mnemonic for --set-xmark bits/bits.)</ul>
+<ul><strong>--xor-mark bits </strong> - Binary XOR the nfmark with bits. (Mnemonic for --set-xmark bits/0.)</ul>
