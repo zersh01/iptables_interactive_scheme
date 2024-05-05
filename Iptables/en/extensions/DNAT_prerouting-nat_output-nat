@@ -1,0 +1,16 @@
+This target is only valid in the <strong>nat</strong> table, in the <strong>PREROUTING</strong> and <strong>OUTPUT</strong> chains,
+and user-defined chains which are only called from those chains. It specifies that the destination 
+address of the packet should be modified (and all future packets in this connection will also be mangled), 
+and rules should cease being examined. It takes the following options:
+<ul><strong>--to-destination [ipaddr[-ipaddr]][:port[-port]]</strong> - which can specify a single new 
+destination IP address, an inclusive range of IP addresses. Optionally a port range, if the rule 
+also specifies one of the following protocols: tcp, udp, dccp or sctp. If no port range is specified,
+ then the destination port will never be modified. If no IP address is specified then only the destination port 
+will be modified. In Kernels up to 2.6.10 you can add several --to-destination options. 
+For those kernels, if you specify more than one destination address, either via an address range or 
+multiple <strong> --to-destination </strong> options, a simple round-robin (one after another in cycle) 
+load balancing takes place between these addresses. Later Kernels (>= 2.6.11-rc1) don't have the ability to NAT to multiple ranges anymore.</ul>
+<ul><strong>--random</strong> - If option --random is used then port mapping will be randomized (kernel >= 2.6.22).</ul>
+<ul><strong>--persistent </strong> - Gives a client the same source-/destination-address for each connection. 
+This supersedes the SAME target. Support for persistent mappings is available from 2.6.29-rc2.
+IPv6 support available since Linux kernels >= 3.7. </ul>

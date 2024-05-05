@@ -1,0 +1,12 @@
+This target is only valid in the mangle table, in the PREROUTING chain and user-defined chains which are only called from this chain. 
+It redirects the packet to a local socket without changing the packet header in any way. 
+It can also change the mark value which can then be used in advanced routing rules. It takes three options:
+--on-port port
+This specifies a destination port to use. It is a required option, 0 means the new destination port is the same as the original. 
+This is only valid if the rule also specifies -p tcp or -p udp.
+--on-ip address
+This specifies a destination address to use. By default the address is the IP address of the incoming interface. 
+This is only valid if the rule also specifies -p tcp or -p udp.
+--tproxy-mark value[/mask]
+Marks packets with the given value/mask. The fwmark value set here can be used by advanced routing. 
+(Required for transparent proxying to work: otherwise these packets will get forwarded, which is probably not what you want.)

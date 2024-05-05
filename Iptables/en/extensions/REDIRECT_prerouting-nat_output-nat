@@ -1,0 +1,6 @@
+This target is only valid in the nat table, in the PREROUTING and OUTPUT chains, and user-defined chains which are only called from those chains. It redirects the packet to the machine itself by changing the destination IP to the primary address of the incoming interface (locally-generated packets are mapped to the localhost address, 127.0.0.1 for IPv4 and ::1 for IPv6).
+--to-ports port[-port]
+This specifies a destination port or range of ports to use: without this, the destination port is never altered. This is only valid if the rule also specifies one of the following protocols: tcp, udp, dccp or sctp.
+--random
+If option --random is used then port mapping will be randomized (kernel >= 2.6.22).
+IPv6 support available starting Linux kernels >= 3.7.

@@ -1,0 +1,23 @@
+TOS
+This module sets the Type of Service field in the IPv4 header (including the "precedence" bits) or 
+the Priority field in the IPv6 header. Note that TOS shares the same bits as DSCP and ECN. 
+The TOS target is only valid in the mangle table.
+--set-tos value[/mask]
+Zeroes out the bits given by mask (see NOTE below) and XORs value into the TOS/Priority field. 
+If mask is omitted, 0xFF is assumed.
+--set-tos symbol
+You can specify a symbolic name when using the TOS target for IPv4. 
+It implies a mask of 0xFF (see NOTE below). The list of recognized TOS names can be obtained by calling iptables with -j TOS -h.
+The following mnemonics are available:
+
+--and-tos bits
+Binary AND the TOS value with bits. (Mnemonic for --set-tos 0/invbits, where invbits is the binary negation of bits. See NOTE below.)
+--or-tos bits
+Binary OR the TOS value with bits. (Mnemonic for --set-tos bits/bits. See NOTE below.)
+--xor-tos bits
+Binary XOR the TOS value with bits. (Mnemonic for --set-tos bits/0. See NOTE below.)
+NOTE: In Linux kernels up to and including 2.6.38, with the exception of longterm releases 2.6.32 (>=.42), 2.6.33 (>=.15), and 2.6.35 (>=.14), 
+there is a bug whereby IPv6 TOS mangling does not behave as documented and differs from the IPv4 version. 
+The TOS mask indicates the bits one wants to zero out, so it needs to be inverted 
+before applying it to the original TOS field. However, the aformentioned kernels 
+forgo the inversion which breaks --set-tos and its mnemonics.  

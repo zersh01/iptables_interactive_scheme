@@ -1,0 +1,15 @@
+This target is only valid in the nat table, in the POSTROUTING chain. 
+It should only be used with dynamically assigned IP (dialup) connections: if you have a static IP address, 
+you should use the SNAT target. Masquerading is equivalent to specifying a mapping to the IP address of 
+the interface the packet is going out, but also has the effect that connections are forgotten when 
+the interface goes down. This is the correct behavior when the next dialup is unlikely to have the same interface address 
+(and hence any established connections are lost anyway).
+<ul><strong>--to-ports port[-port] </strong> - 
+This specifies a range of source ports to use, overriding the default SNAT source 
+port-selection heuristics (see above). This is only valid if the rule also specifies 
+one of the following protocols: tcp, udp, dccp or sctp.</ul>
+<ul><strong>--random </strong> - Randomize source port mapping If option --random is used 
+then port mapping will be randomized (kernel >= 2.6.21). Since kernel 5.0, --random is identical to --random-fully.</ul>
+<ul><strong>--random-fully  </strong> - Full randomize source port mapping If option 
+--random-fully is used then port mapping will be fully randomized (kernel >= 3.13).</ul>
+IPv6 support available since Linux kernels >= 3.7.
