@@ -92,27 +92,49 @@
     	    }
 	}
 
-	function loadExtensions(language) {
-    	    var path = 'Iptables/' + language + '/extensions/';
-            $.ajax({
-                url: path,
-                success: function (data) {
-                    var files = $(data).find("a");
-                    $("#extensionSelect").empty(); // Очищаем текущие опции
-                    $("#extensionSelect").append($('<option value="none">None</option>')); // Добавляем опцию "None"
-                    files.each(function () {
-                        var href = this.href;
-                        var filename = href.substring(href.lastIndexOf('/') + 1); // Получаем только имя файла
-                        if (filename.indexOf('.') === -1 && filename.indexOf('baloon') === -1) {
-                            var parts = filename.split('_');
-                            var label = parts[0];
-                            var values = parts.slice(1); // Собираем все labels
-                            $("#extensionSelect").append($('<option></option>').val(filename).text(label));
-                        }
-                    });
+function loadExtensions(language, git_pages) {
+
+    $("#extensionSelect").empty(); // Очищаем текущие опции
+    $("#extensionSelect").append($('<option value="none">None</option>')); // Добавляем опцию "None"
+
+    // 1 for git_pages, 0 for local web servers
+    var git_pages = 1; 
+    
+    if (git_pages === 1) {
+        // Загружаем из файла extension_list
+        var path = 'Iptables/' + language + '/extensions/extension_list';
+        $.get(path, function(data) {
+            var lines = data.split('\n');
+            lines.forEach(function(line) {
+                if (line.trim().length > 0) {
+                    var parts = line.split('_');
+                    var label = parts[0];
+                    var filename = line.trim();
+                    $("#extensionSelect").append($('<option></option>').val(filename).text(label));
                 }
             });
-        }
+        });
+    } else {
+        // Используем существующий метод загрузки
+        var path = 'Iptables/' + language + '/extensions/';
+        $.ajax({
+            url: path,
+            success: function(data) {
+                var files = $(data).find("a");
+                files.each(function() {
+                    var href = this.href;
+                    var filename = href.substring(href.lastIndexOf('/') + 1);
+                    if (filename.indexOf('.') === -1 && filename.indexOf('baloon') === -1 && filename.indexOf('extension_list') === -1) {
+                        var parts = filename.split('_');
+                        var label = parts[0];
+                        var values = parts.slice(1); // Собираем все labels
+                        $("#extensionSelect").append($('<option></option>').val(filename).text(label));
+                    }
+                });
+        	}
+    	    });
+	}
+    }
 
         $('#languageSelect').change(function () {
             var selectedLanguage = $(this).val();
