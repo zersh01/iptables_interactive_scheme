@@ -1,0 +1,8 @@
+此目标仅在 <strong>mangle</strong> 表中、PREROUTING 链以及仅从该链调用的用户自定义链中有效。它将数据包重定向到本地套接字，而不以任何方式修改数据包头。<br><br>
+它还可以更改标记值，该值随后可用于高级路由规则。有三个选项：
+
+<ul><strong>--on-port port </strong> - 指定要使用的目标端口。这是一个必选项，0 表示新的目标端口与原始端口相同。仅当规则还指定了 -p tcp 或 -p udp 时才有效。</ul>
+
+<ul><strong>--on-ip address </strong> - 指定要使用的目标地址。默认地址是入站接口的 IP 地址。仅当规则还指定了 -p tcp 或 -p udp 时才有效。</ul>
+
+<ul><strong>--tproxy-mark value[/mask] </strong> - 使用给定的值/掩码标记数据包。此处设置的 fwmark 值可用于高级路由。（透明代理需要此选项：否则这些数据包将被重定向，这可能不是您想要的。）</ul>

@@ -5,6 +5,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="keywords" content="iptables, iptables visual scheme">
    <meta name="author" content="zersh">
+
    <title>Iptables interactive scheme</title>
 
    <link rel="stylesheet" href="styles.css">
@@ -23,6 +24,7 @@
          <select id="languageSelect">
             <option value="ru">RU</option>
             <option value="en">EN</option>
+            <option value="zh_CN">zh_CN</option>
          </select>
       </div>
       <div id="middle">
@@ -92,49 +94,47 @@
     	    }
 	}
 
-function loadExtensions(language, git_pages) {
+	function loadExtensions(language, git_pages) {
 
-    $("#extensionSelect").empty(); // Очищаем текущие опции
-    $("#extensionSelect").append($('<option value="none">None</option>')); // Добавляем опцию "None"
+	    $("#extensionSelect").empty(); // Очищаем текущие опции
+	    $("#extensionSelect").append($('<option value="none">None</option>')); // Добавляем опцию "None"
 
-    // 1 for git_pages, 0 for local web servers
-    var git_pages = 1; 
-    
-    if (git_pages === 1) {
-        // Загружаем из файла extension_list
-        var path = 'Iptables/' + language + '/extensions/extension_list';
-        $.get(path, function(data) {
-            var lines = data.split('\n');
-            lines.forEach(function(line) {
-                if (line.trim().length > 0) {
-                    var parts = line.split('_');
-                    var label = parts[0];
-                    var filename = line.trim();
-                    $("#extensionSelect").append($('<option></option>').val(filename).text(label));
-                }
-            });
-        });
-    } else {
-        // Используем существующий метод загрузки
-        var path = 'Iptables/' + language + '/extensions/';
-        $.ajax({
-            url: path,
-            success: function(data) {
-                var files = $(data).find("a");
-                files.each(function() {
-                    var href = this.href;
-                    var filename = href.substring(href.lastIndexOf('/') + 1);
-                    if (filename.indexOf('.') === -1 && filename.indexOf('baloon') === -1 && filename.indexOf('extension_list') === -1) {
-                        var parts = filename.split('_');
-                        var label = parts[0];
-                        var values = parts.slice(1); // Собираем все labels
-                        $("#extensionSelect").append($('<option></option>').val(filename).text(label));
-                    }
-                });
-        	}
-    	    });
-	}
-    }
+	    var git_pages = 0; // 1 for git_pages,  0 for local web servers
+	    if (git_pages === 1) {
+	        // Загружаем из файла extension_list
+	        var path = 'Iptables/' + language + '/extensions/extension_list';
+	        $.get(path, function(data) {
+	            var lines = data.split('\n');
+	            lines.forEach(function(line) {
+	                if (line.trim().length > 0) {
+	                    var parts = line.split('_');
+	                    var label = parts[0];
+	                    var filename = line.trim();
+	                    $("#extensionSelect").append($('<option></option>').val(filename).text(label));
+	                }
+	            });
+	        });
+	    } else {
+	        // Используем существующий метод загрузки
+	        var path = 'Iptables/' + language + '/extensions/';
+	        $.ajax({
+	            url: path,
+	            success: function(data) {
+	                var files = $(data).find("a");
+	                files.each(function() {
+	                    var href = this.href;
+	                    var filename = href.substring(href.lastIndexOf('/') + 1);
+	                    if (filename.indexOf('.') === -1 && filename.indexOf('baloon') === -1 && filename.indexOf('extension_list') === -1) {
+	                        var parts = filename.split('_');
+	                        var label = parts[0];
+	                        var values = parts.slice(1); // Собираем все labels
+	                        $("#extensionSelect").append($('<option></option>').val(filename).text(label));
+	                    }
+	                });
+	                }
+	            });
+	        }
+	    }
 
         $('#languageSelect').change(function () {
             var selectedLanguage = $(this).val();

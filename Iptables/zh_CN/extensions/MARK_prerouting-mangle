@@ -1,0 +1,17 @@
+这个参数用于设置与数据包相关联的 Netfilter 标记值。<br><br>
+
+例如，它可以与基于 fwmark 的路由结合使用（需要 iproute2）。<br><br>
+如果你计划这样做，请注意，标记必须在 <strong>mangle</strong> 表的 <strong>PREROUTING</strong> 链中设置，
+以影响路由。标记字段的宽度为 32 位。<br><br>
+
+<ul><strong>--set-xmark value[/mask]</strong> - 将掩码指定的位清零，并对数据包标记（"nfmark"）执行 XOR 操作。
+如果省略掩码，则默认为 0xFFFFFFFF。</ul>
+<ul><strong>--set-mark value[/mask]</strong> - 将掩码指定的位清零，并对数据包标记执行 OR 操作。
+如果省略掩码，则默认为 0xFFFFFFFF。</ul>
+以下是可用的助记符：
+<ul><strong>--and-mark bits </strong> - 对 nfmark 标记与 bits 执行按位与操作。
+（等同于 --set-xmark 0/invbits，其中 invbits 是 bits 的按位取反。）</ul>
+<ul><strong>--or-mark bits </strong> - 对 nfmark 标记与 bits 执行按位或操作。
+（等同于 --set-xmark bits/bits。）</ul>
+<ul><strong>--xor-mark bits </strong> - 对 nfmark 标记与 bits 执行按位异或操作。
+（等同于 --set-xmark bits/0。）</ul>

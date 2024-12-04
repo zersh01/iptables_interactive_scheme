@@ -1,0 +1,9 @@
+使用的是 <strong>conntrack</strong> - netfilter 的一个组件，负责跟踪连接状态并对数据包进行分类，以确定它们是否属于已建立的连接或新连接的一部分，从而使 netfilter 能够进行全功能的 stateful 流量过滤。与 netfilter 一样，conntrack 系统也是 Linux 内核的一部分。<br><br>
+
+任务:<br>
+<ul>跟踪单个连接的状态，以便将每个数据包分类为属于已建立的连接或打开新连接的数据包。为此，对于原本没有连接状态的协议（如 UDP 和 ICMP），引入了“连接状态”的概念。而对于支持状态的协议（如 TCP），conntrack 则积极利用这一特性，与 Linux 内核的基本网络子系统紧密互动。</ul>
+<ul>跟踪相关联的连接，例如，TCP 和 UDP 数据包的 ICMP 响应。更复杂的例子是使用多个连接的协议，如 FTP。为了正确处理这些协议，conntrack 使用专门的模块（conntrack helpers），这些模块分析流量并“捕获”协议中关于新连接的信息（例如，将打开的端口），从而确保它们的正确过滤、路由、整形和通过 NAT。</ul>
+
+<br>为了从用户空间与 conntrack 系统交互，开发了一套 conntrack-tools，包含两个工具：
+<ul><strong>conntrack</strong> - 允许系统管理员观察连接状态表并与之交互的工具：清除整个表、删除单个条目、手动标记连接（类似于 CONNMARK 操作）、设置连接超时。支持基于源地址和/或目的地址和/或端口的输出过滤，以及多种格式的输出，包括 XML。此外，该工具还允许实时跟踪 conntrack 系统的事件，例如，新连接的打开或现有连接状态的更改。</ul>
+<ul><strong>conntrackd</strong> - 负责与其他主机同步连接状态表的守护进程，结合 keepalived 守护进程的功能，可以创建高可用性（High Availability）集群上的防火墙 - 当集群中的一个主机发生故障时，其连接将被集群中的其他主机“接管”并根据状态正确处理。conntrackd 也可以用于远程收集连接的统计信息。</ul>

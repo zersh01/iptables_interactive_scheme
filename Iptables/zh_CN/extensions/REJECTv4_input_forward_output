@@ -1,0 +1,12 @@
+REJECT（特定于 IPv4）
+此目标用于发送错误数据包以响应匹配的数据包；否则，它等同于 DROP，
+因此这是一个终止目标，结束规则的跳转。此目标仅在 INPUT、FORWARD 和 OUTPUT 链中有效，
+以及仅从这些链中调用的用户自定义链中有效。以下选项控制返回的错误数据包的性质：
+<ul><strong>--reject-with type </strong>- 指定的类型可以是 icmp-net-unreachable、
+icmp-host-unreachable、icmp-port-unreachable、icmp-proto-unreachable、icmp-net-prohibited、
+icmp-host-prohibited 或 icmp-admin-prohibited (*)，它们返回相应的 ICMP 错误消息
+（默认使用 icmp-port-unreachable）。
+选项 tcp-reset 可以用于仅匹配 TCP 协议的规则：这将导致发送回 TCP RST 数据包。
+这主要用于阻止 ident 探测（113/tcp），这些探测通常在向故障邮件服务器发送邮件时发生
+（否则这些服务器将不会接受您的邮件）。</ul>
+(*) 在不支持 icmp-admin-prohibited 的内核上使用它将导致普通的 DROP 而不是 REJECT

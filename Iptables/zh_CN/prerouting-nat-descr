@@ -1,0 +1,12 @@
+<strong>nat</strong> 表中的 <strong>PREROUTING</strong> 链 - 数据包在路由决策之前进入此链。<br><br>
+实际上，“路由决策”一词意味着将流量分为入站流量（发往主机本身）和转发流量（通过该主机发往其他主机）。正是在这个阶段，需要进行端口转发操作（DNAT、REDIRECT、NETMAP）。<br>
+可用操作：<br>
+<ul><strong>DNAT</strong>（目标网络地址转换） - 此操作允许在数据包通过 PREROUTING 链时更改其目标地址或端口。结果是，数据包将被重定向到另一个目标地址和/或端口。例如，您可以使用 DNAT 将传入的网络流量重定向到另一个服务器或端口。<br>
+DNAT 使用示例：<br><br>
+<pre> iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.1.100:8080 </pre></ul>
+<ul><strong>REDIRECT</strong> - 此操作允许将数据包重定向到同一主机上的本地端口，数据包通过 PREROUTING 链时发生。这在配置代理服务器或本地端口重定向时很有用。<br>
+REDIRECT 使用示例：<br><br>
+<pre> iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80 </pre></ul>
+<ul><strong>NETMAP</strong> - 这是 iptables 的一个附加扩展，允许使用特殊映射更改数据包的 IP 地址以进行网络映射。例如，在不同私有网络之间重定向数据包时，这将非常有用。<br>
+NETMAP 使用示例：<br><br>
+<pre> iptables -t nat -A PREROUTING -d 192.168.0.0/24 -j NETMAP --to 172.16.0.0/24 </pre></ul>

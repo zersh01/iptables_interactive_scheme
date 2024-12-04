@@ -1,0 +1,9 @@
+目标 CT 允许为数据包或其关联的连接设置参数。目标将“模板”连接跟踪记录附加到数据包，该记录随后被 conntrack 内核用于初始化新的 ct 记录。因此，此目标仅在 <strong>"raw"</strong> 表中有效。<br><br>
+<ul><strong>--notrack</strong> - 禁用此数据包的连接跟踪。</ul>
+<ul><strong>--helper name</strong> - 使用由名称标识的助手来处理连接。这比加载带有预设端口的 conntrack 助手模块更灵活。</ul>
+<ul><strong>--ctevents event[,...] </strong> - 仅为该连接生成指定的连接跟踪事件。可能的事件类型包括：new, related, destroy, reply, assured, protoinfo, helper, mark（指 ctmark，而非 nfmark）, natseqinfo, secmark（ctsecmark）。</ul>
+<ul><strong>--expevents event[,...]</strong> - 仅为该连接生成指定的预期事件。可能的事件类型包括：new。</ul>
+<ul><strong>--zone-orig {id|mark} </strong> - 对于来自原始方向的流量，将此数据包分配到具有标识符 id 的区域，并仅在该区域中进行查找。如果使用 mark 代替 id，则区域从数据包的 nfmark 中推导。</ul>
+<ul><strong>--zone-reply {id|mark}</strong> - 对于来自回复方向的流量，将此数据包分配到具有标识符 id 的区域，并仅在该区域中进行查找。如果使用 mark 代替 id，则区域从数据包的 nfmark 中推导。</ul>
+<ul><strong>--zone {id|mark} </strong> - 将此数据包分配到具有标识符 id 的区域，并仅在该区域中进行查找。如果使用 mark 代替 id，则区域从数据包的 nfmark 中推导。默认情况下，数据包位于区域 0 中。此参数适用于两个方向。</ul>
+<ul><strong>--timeout name </strong> - 使用由名称标识的超时策略来处理连接。这提供了比 /proc/sys/net/netfilter/nf_conntrack_*_timeout_* 中可用的全局超时值更灵活的超时策略定义。</ul>

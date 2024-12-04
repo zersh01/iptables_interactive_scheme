@@ -1,0 +1,4 @@
+此目标标记数据包，使得内核在数据包通过表、链、规则时，记录每个匹配的规则。它只能用于 <strong>raw</strong> 表。<br><br>
+对于 iptables-legacy，需要加载日志记录后端，例如 ipt_LOG 或 nfnetlink_log，以便可见。数据包以以下前缀记录："TRACE: tablename:chainname:type:rulenum"，其中类型可以是 "rule" 表示普通规则，"return" 表示用户定义链末尾的隐式规则，以及 "policy" 表示内置链的策略。<br><br>
+
+对于 iptables-nft，目标被转换为 nftables 元数据的 nftrace 表达式。因此，内核通过 netlink 将跟踪事件发送到用户空间，可以通过命令 xtables-monitor --trace 显示。有关详细信息，请参阅 xtables-monitor(8)。

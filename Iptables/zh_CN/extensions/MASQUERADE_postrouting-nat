@@ -1,0 +1,5 @@
+此选项仅在 <strong>nat</strong> 表的 <strong>POSTROUTING</strong> 链中有效。它应仅用于动态分配的 IP 连接（通过拨号）：如果您有静态 IP 地址，应使用 SNAT 目标。NAT 等同于指定映射到数据包通过的接口的 IP 地址，但还具有在接口关闭时连接被遗忘的效果。这是正确的行为，因为通过拨号的下一次连接不太可能具有相同的接口地址（因此，任何已建立的连接无论如何都会丢失）。
+<ul><strong>--to-ports port[-port] </strong> - 这指定了要使用的源端口范围，覆盖 SNAT 源端口选择的默认启发式方法（见上文）。仅当规则还指定了以下协议之一时才有效：tcp、udp、dccp 或 sctp。</ul>
+<ul><strong>--random </strong> - 源端口映射的随机化。如果使用 --random 选项，端口映射将被随机化（内核 >= 2.6.21）。从内核 5.0 开始，--random 与 --random-fully 相同。</ul>
+<ul><strong>--random-fully </strong> - 源端口映射的完全随机化。如果使用 --random-fully 选项，端口映射将完全随机化（内核 >= 3.13）。</ul>
+IPv6 支持从 Linux 内核 >= 3.7 开始可用。

@@ -1,0 +1,41 @@
+<strong>mangle</strong> 表中的 <strong>PREROUTING</strong> 链 - 允许在路由决策之前修改数据包。<br><br>
+可用的操作如下：<br><br>
+<ul><strong>TOS</strong> - 设置 IP 数据包头中的 Type of Service 字段。选项 --set-tos 指示 TOS 管理器为匹配的数据包设置哪个 TOS 值。该选项接受数值，可以是十六进制或十进制形式。由于 TOS 值由 8 位组成，因此该值可以是 0-255，或十六进制形式 0x00-0xFF。<br><br>
+<code>iptables -t mangle -A PREROUTING -p TCP --dport 22 -j TOS --set-tos 0x10</code><br><br>
+此外，在 IPv4 (iptables) 中，在 --set-tos 参数中，您可以指定以下任何有效的符号表示：Minimize-Delay (TOS 16, 最小延迟要求)，Maximize-Throughput (TOS 8, 最大吞吐量要求)，Maximize-Reliability (TOS 4, 最大可靠性)，Minimize-Cost (TOS 2, 最小成本)，Normal-Service (TOS 0, 无特殊要求)。在 ip6tables 中使用这些符号表示是不被禁止的，但在这种情况下，使用 DSCP 操作更为合适。<br></ul>
+<ul><strong>TTL</strong> - 设置 IP 数据包头中的 Time to Live 字段。<br><br>
+以下规则将使您的网关对大多数 traceroute 工具不可见：<br><br>
+
+<code>iptables -t mangle -I PREROUTING -j TTL --ttl-inc 1</code><br><br>
+
+请注意，内核网络堆栈自动执行的 TTL 减一操作和检查 TTL 是否为零的操作是在 PREROUTING 链之后，但在 FORWARD 链之前执行的。因此，将此规则移动到 FORWARD 链中，您将确保下一个网关的“不可见性”。</ul>
+<ul><strong>HL</strong> - 修改 IPv6 数据包头中的 Hop Limit 字段。它是 IPv4 TTL 操作的类似操作，并支持相同的操作。</ul>
+<ul><strong>MARK</strong> - 设置或修改数据包的标记。它只有一个选项 mark。一个简单的例子，将标记为 15 的数据包突出显示：<br> <code>-m mark --mark 15</code><br>
+如果指定了掩码，则在将每个数据包的标记与给定值进行比较之前，会通过逻辑 AND 操作将标记与该掩码组合，即检查条件 x & 掩码 == 值（其中 x 是当前数据包的标记）。这种方法允许比较单个位。</ul>
+
+<ul><strong>CONNMARK</strong> - 设置或修改连接的标记。它支持与 MARK 相同的选项，以及额外的选项 --restore-mark（将连接标记复制到数据包标记）和 --save-mark（将数据包标记复制到连接标记）。<br><br>
+
+<code>iptables -t mangle -A PREROUTING -i eth0 -m conntrack --ctstate NEW -j CONNMARK --set-mark 1</code><br><br>
+
+连接标记允许根据单个数据包的信息对整个连接进行分类。通过标记此数据包，您可以对其应用 CONNMARK 操作，并且您选择的标记将自动应用于连接中的所有数据包。之后，您可以例如以某种方式修改这些数据包，或使用此标记进行路由或数据包整形。因此，您将连接视为一个整体进行操作。此外，此标记会自动复制到与当前连接相关的连接中。</ul>
+<ul><strong>CLASSIFY</strong> - 设置数据包的 CBQ 类，以便后续由整形器处理（选项 --set-class）。</ul>
+<ul><strong>ULOG</strong> - 允许将处理过的数据包信息传递给特殊守护进程，如 ulogd。</ul>
+<ul><strong>NFLOG</strong> - ULOG 的更通用版本，提供将数据包信息传递给日志后端子系统，而不是直接传递给 netlink 套接字（如 ULOG 所做的那样）。例如，nfnetlink_log 后端将数据传递给 netlink 套接字，因此 NFLOG 与 ULOG 的工作方式类似。</ul>
+
+<ul><strong>TCPMSS</strong> - 设置 TCP 段的最大大小。在使用 VPN 连接时非常有用，如果 VPN 服务器阻止 ICMP 消息 destination unreachable/fragmentation needed（类型 3，代码 4），从而破坏 Path MTU discovery 过程。从客户端的角度来看，这个问题表现为：ping 正常通过，但在尝试打开任何网页时，浏览器“卡住”。同时，从网关本身来看，一切正常。在这种情况下，只需在网关上应用以下命令：<br><br>
+
+<code>iptables -t mangle -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu</code><br><br>
+
+请注意，规则设置在 <strong>FORWARD</strong> 链中。该规则将根据我们网关已知的 MTU 路径上的最小值自动设置 TCP 头中 SYN 和 RST,SYN 数据包的段大小。例如，如果数据包从 eth0 接口（MTU 1500）进入并通过 ppp0 接口（MTU 1492）离开，而网络和传输层头部的总大小为 40 字节（20 字节 TCP 和 20 字节 IP），则合理的 MSS 应设置为 1452 字节。<br><br>
+除了自动选择 TCP MSS 的能力外，您还可以使用参数 --set-mss 值手动设置所需值。如果您已知路径上存在 MTU 更小的部分，并且这些部分的边界服务器再次阻止 ICMP destination unreachable/fragmentation needed，这会很有用。</ul>
+
+<ul><strong>TPROXY</strong> - 实现完全透明的代理机制。与传统使用的“透明”代理（nat 表中的 REDIRECT 操作）不同，这种代理不会修改数据包头，包括不会替换目标 IP 地址（在传统透明代理中，目标 IP 地址被替换为代理主机的地址）。<br>
+此外，完全透明代理对通信双方都是透明的。例如，在代理客户端子网到服务器子网的请求时，可以做到不仅客户端认为它们直接与服务器通信，而且服务器也能“看到”客户端的真实源地址，并能够与它们建立反向连接（例如，在 FTP 主动模式下）。而在传统的“透明”代理中，服务器只能看到代理服务器的地址。</ul>
+
+<ul><strong>TEE</strong> - 这是 iptables 中的一个选项，用于将数据包从一个接口复制到另一个接口。应用于 mangle 表中的 PREROUTING 和 POSTROUTING 链。<br><br>
+当您使用 -j TEE 时，您还需要使用 --gateway 选项指定目标节点的 IP 地址。所有通过应用此规则的链的数据包都将被复制并发送到指定的网关，但原始数据包仍将按其原始方向传递。这在您希望实时分析流量而不中断其传输时很有用。<br><br>
+
+<code>
+iptables -t mangle -A PREROUTING -j TEE --gateway 10.0.0.1<br>
+iptables -t mangle -A POSTROUTING -j TEE --gateway 10.0.0.1
+</code></ul>

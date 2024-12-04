@@ -1,0 +1,10 @@
+<strong>HL (特定于 IPv6)</strong>
+此参数用于更改 IPv6 报头中的 Hop Limit 字段。
+Hop Limit 字段类似于 IPv4 中称为 TTL 的值。设置或增加 Hop Limit 字段
+可能非常危险，因此应不惜一切代价避免。此目标仅在 mangle 表中有效。
+
+切勿在离开您本地网络的数据包上设置或增加值！
+
+<ul><strong>--hl-set value </strong> - 将 Hop Limit 设置为 value。</ul>
+<ul><strong>--hl-dec value </strong> - 将 Hop Limit 减少 value 次。</ul>
+<ul><strong>--hl-inc value </strong> - 将 Hop Limit 增加 value 次。</ul>
