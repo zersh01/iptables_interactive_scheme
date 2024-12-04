@@ -1,0 +1,7 @@
+此目标仅在 <strong>nat</strong> 表中有效，适用于 PREROUTING 和 OUTPUT 链，
+以及仅从这些链调用的用户自定义链。它将数据包重定向到本机，将目标 IP 地址更改为
+入站接口的主地址（本地生成的数据包映射到本地主机地址，IPv4 为 127.0.0.1，IPv6 为 ::1）。
+<ul><strong>--to-ports port[-port] </strong> - 这指定了要使用的目标端口或端口范围：如果没有此选项，目标端口永远不会更改。
+这仅在规则还指定了以下协议之一时有效：tcp、udp、dccp 或 sctp。</ul>
+<ul><strong>--random </strong> - 如果使用 --random 选项，端口映射将是随机的（内核 >= 2.6.22）。</ul>
+IPv6 支持从 Linux 内核 >= 3.7 开始可用。

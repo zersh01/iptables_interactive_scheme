@@ -1,0 +1,13 @@
+<strong>raw</strong> 表用于在系统 conntrack 处理数据包之前执行操作。<br>
+以下是可用的操作：<br><br>
+<ul><strong>NOTRACK</strong> - 允许阻止系统 conntrack 处理数据包 <br>
+<br><code>iptables -A PREROUTING -p tcp  -j NOTRACK</code></ul>
+<ul><strong>CT</strong> - 一个更功能强大的工具。支持以下选项：--notrack, --helper, --ctevents,  --zone <br>
+简单启用：<br><br>
+<code>iptables -t raw -A PREROUTING -j CT</code><br>
+<br>使用特定的助手<br><br>
+<code>iptables -A PREROUTING -t raw -p tcp --dport 2121 -d 1.2.3.4 -j CT --helper ftp</code></ul>
+<ul><strong>RAWDNAT</strong> — 允许以“原始”方式执行地址和端口的“转发”<br><br>
+例如，在数据包响应中替换目标地址。<br><br>
+<code>iptables -t raw -A PREROUTING -i eth0 -s 172.18.1.100 -d 192.168.0.0/16 -j RAWDNAT --to-destination 10.125.0.0/16</code><br><br>
+这样，主机 172.18.1.100 将认为向其请求的主机来自子网 10.125.0.0/16，而不是 192.168.0.0/16。<br></ul>

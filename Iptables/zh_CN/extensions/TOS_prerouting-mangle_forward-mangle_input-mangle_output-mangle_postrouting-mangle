@@ -1,0 +1,13 @@
+<strong>TOS</strong>
+此模块设置 IPv4 报头中的服务类型 (Type of Service, TOS) 字段（包括“优先级”位）或 IPv6 报头中的优先级字段。请注意，TOS 与 DSCP 和 ECN 共享相同的位。TOS 目标仅在 <strong>mangle</strong> 表中有效。
+<ul><strong>--set-tos value[/mask]</strong> - 将掩码指定的位清零（参见下面的注释），并对 TOS/优先级字段中的值执行 XOR 操作。如果省略掩码，则假定为 0xFF。</ul>
+<ul><strong>--set-tos symbol</strong> - 在使用 TOS 目标时，您可以指定符号名称用于 IPv4。这隐含了掩码 0xFF（参见下面的注释）。可以通过调用 iptables 并使用 -j TOS -h 来获取可识别的 TOS 名称列表。</ul>
+以下是可用的助记符：
+
+<ul><strong>--and-tos bits</strong> - 对 TOS 值的位与指定位进行逻辑与操作。
+（助记符为 --set-tos 0/invbits，其中 invbits 是位的二进制补码。参见下面的注释。）</ul>
+<ul><strong>--or-tos bits</strong> - 对 TOS 值的位与指定位进行逻辑或操作。
+（助记符为 --set-tos bits/bits。参见下面的注释。）</ul>
+<ul><strong>--xor-tos bits</strong> - 对 TOS 值的位与指定位进行逻辑异或操作。
+（助记符为 --set-tos bits/0。参见下面的注释。）</ul>
+注释：在 Linux 内核 2.6.38 及更早版本中，除了长期支持版本 2.6.32 (>= .42)、2.6.33 (>= .15) 和 2.6.35 (>= .14) 之外，存在一个错误，导致对 IPv6 的 TOS 操作无法按描述工作，并且与 IPv4 版本不同。TOS 掩码指定了需要清零的位，因此在应用于原始 TOS 字段之前需要对其进行反转。然而，提到的内核跳过了反转操作，这破坏了 --set-tos 及其助记符的工作。

@@ -1,0 +1,5 @@
+在 <strong>nat</strong> 表的 <strong>OUTPUT</strong> 链中，可以使用以下操作：<br>
+<ul><strong>DNAT</strong> - 在发送之前更改数据包的目标地址和/或端口</ul>
+<ul><strong>SNAT</strong> - 在发送之前更改数据包的源地址和/或端口</ul>
+<ul><strong>MASQUERADE</strong> - 自动选择用于出站数据包的地址和/或端口，以隐藏真实的源地址</ul>
+<ul><strong>REDIRECT</strong> - 将数据包重定向到本地网络内的另一个地址和/或端口</ul>

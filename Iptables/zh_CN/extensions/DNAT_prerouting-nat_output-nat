@@ -1,0 +1,13 @@
+此目标仅在表 <strong>nat</strong> 中有效，适用于链 <strong>PREROUTING</strong> 和 <strong>OUTPUT</strong>，
+以及仅从这些链调用的用户自定义链。它指示应更改数据包的目标地址（以及该连接中所有后续数据包的目标地址），
+并且规则应停止检查。它接受以下参数：
+<ul><strong>--to-destination [ipaddr[-ipaddr]][:port[-port]]</strong> - 可以指定一个新的
+目标 IP 地址，或包含 IP 地址的范围。如果规则还指定了以下协议之一：tcp、udp、dccp 或 sctp，则可以指定端口范围。
+如果未指定端口范围，则不会更改目标端口。如果未指定 IP 地址，则仅更改目标端口。
+在 2.6.10 版本之前的内核中，您可以添加多个 --to-destination 参数。
+对于这些内核，如果您指定多个目标地址，无论是通过地址范围还是多个 <strong>--to-destination</strong> 参数，
+都会在这些地址之间进行简单的循环负载均衡（一个接一个地循环）。更新的内核（>= 2.6.11-rc1）不再支持 NAT 到多个范围。</ul>
+<ul><strong>--random</strong> - 如果使用 --random 参数，端口映射将是随机的（内核 >= 2.6.22）。</ul>
+<ul><strong>--persistent</strong> - 为每个连接的客户端提供相同的目标/源地址。
+这取代了 SAME 目标。持久映射的支持从 2.6.29-rc2 开始可用。
+IPv6 支持从 Linux 内核版本 >= 3.7 开始可用。</ul>

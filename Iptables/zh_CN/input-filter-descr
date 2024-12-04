@@ -1,0 +1,56 @@
+用于过滤数据包，是默认的表。<br>
+
+<ul><strong>ACCEPT</strong> — 允许数据包通过。数据包离开当前基本链并继续沿着流图前进。
+例如，打开端口 80 和 443：<br><br>
+
+<code>iptables -t filter -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT</code><br><br>
+
+允许 ICMP：<br><br>
+<code>iptables -t filter -A INPUT -p icmp -j ACCEPT</code><br><br>
+
+允许在接口 eth0 上的任何流量：<br><br>
+<code>iptables -t filter -A INPUT -i eth0 -j ACCEPT</code><br><br>
+
+仅允许来自网络 192.168.1.0/24 的 SSH 访问：<br><br>
+<code>iptables -t filter -A INPUT -p tcp -s 192.168.1.0/24 --dport 22  -j ACCEPT</code></ul>
+
+<ul><strong>REJECT</strong> — 阻止数据包并向其来源发送拒绝通知。
+默认情况下，拒绝通知是通过发送 ICMP 包“icmp-port-unreachable”来实现的。
+然而，此操作支持 --reject-with 选项，允许指定拒绝消息的措辞（可能的值：icmp-net-unreachable, icmp-host-unreachable, icmp-proto-unreachable,
+icmp-net-prohibited, icmp-host-prohibited）。对于 TCP 协议，支持发送 RST 包形式的拒绝（--reject-with tcp-reset）。
+
+例如，对于端口 1234：<br><br>
+<code>iptables -t filter -A INPUT -p tcp --dport 1234 -j REJECT --reject-with tcp-reset</code></ul>
+
+<ul><strong>DROP</strong> — 阻止数据包，不向来源发送拒绝通知。在连接到互联网的接口上过滤流量时更可取，
+因为它降低了攻击者扫描主机端口的可见性。<br><br>
+
+DROP 可能更适合于隐蔽保护和最小化流量，而 REJECT
+可能更适合于主动通知发送者其数据包被拒绝。
+选择取决于您的具体情况和安全策略。<br><br>
+
+此外，xtables-addons 模块提供的操作也值得关注（目前该项目已包含在 Debian testing 中）。其中一些操作包括：
+</ul>
+<ul><strong>STEAL</strong> — 类似于 DROP，但在 OUTPUT 链中使用时，阻止出站数据包时不向尝试发送该数据包的应用程序报告错误。</ul>
+<ul><strong>TARPIT</strong> — “挂起” TCP 连接。仅在最极端的情况下使用，例如在对抗 DoS 攻击时。
+响应传入连接，然后将帧大小减小到零，阻止数据传输。
+连接将在此状态下“挂起”，直到攻击方超时（通常为 20-30 分钟）。
+在此期间，攻击方会消耗系统资源（CPU 时间和内存），
+这在连接数量较多时可能非常明显。正确使用 TARPIT 操作时，
+被攻击方的资源几乎不会被消耗。<br><br>
+
+正确使用意味着防止 conntrack 子系统处理此类连接，
+否则将消耗被攻击方主机的系统资源。
+
+例如，在添加阻止端口的规则之前<br>
+<pre>iptables -I INPUT -p tcp --dport 25 -j TARPIT</pre> 务必在 raw 表中添加相应的规则，
+防止 conntrack 子系统处理被阻止的连接：
+<pre>iptables -t raw -I PREROUTING -p tcp --dport 25 -j NOTRACK</pre> </ul>
+
+<ul><strong>DELUDE</strong> — 创建开放 TCP 端口的假象。对 SYN 包回复 SYN/ACK 包，对所有其他包回复 RST 包。
+非常适用于误导正在扫描您主机端口的攻击者。</ul>
+
+<ul><strong>CHAOS</strong> — 对于每个新的 TCP 连接，随机选择两种操作之一。
+第一种是 REJECT，第二种根据所选选项，要么是 TARPIT（--tarpit），要么是 DELUDE（--delude）。
+特别是，当使用 CHAOS --delude 操作时，对于所有未使用的端口，扫描您端口的攻击者
+将获得完全错误的端口状态信息。如果使用 CHAOS --tarpit，情况还会因“挂起”的连接而恶化。</ul>

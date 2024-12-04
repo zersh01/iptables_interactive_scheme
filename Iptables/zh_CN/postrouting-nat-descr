@@ -1,0 +1,11 @@
+<strong>nat</strong> 表中的 <strong>POSTROUTING</strong> 链<br><br>
+可用操作：<br>
+<ul><strong>SNAT</strong>（源 NAT） - 此操作允许在数据包通过 POSTROUTING 链时更改其源地址或端口。它用于更改数据包的源地址和/或源连接端口。SNAT 常用于将来自私有地址空间的出站流量转换为公共地址，以实现互联网可达性。<br>
+SNAT 使用示例：<br><br>
+<pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 203.0.113.10 </pre></ul>
+<ul><strong>MASQUERADE</strong> - 此操作为 SNAT 的特殊形式，用于动态更改源地址为动态 IP 地址（例如通过 DHCP 配置的地址）的数据包的源地址。当外部服务器地址未知时，MASQUERADE 使用方便。<br>
+MASQUERADE 使用示例：<br><br>
+<pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE </pre></ul>
+<ul><strong>NETMAP</strong> - 与 PREROUTING 链中的操作类似，NETMAP 操作允许在 POSTROUTING 链之后使用特殊映射更改数据包的 IP 地址。<br>
+NETMAP 使用示例：<br><br>
+<pre> iptables -t nat -A POSTROUTING -d 172.16.0.0/24 -j NETMAP --to 192.168.0.0/24 </pre></ul>

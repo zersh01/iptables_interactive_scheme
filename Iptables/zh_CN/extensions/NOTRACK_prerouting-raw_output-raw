@@ -1,0 +1,2 @@
+此扩展禁用所有匹配此规则的数据包的连接跟踪。<br>
+它等同于 -j CT --notrack。与 CT 一样，NOTRACK 只能用于 <strong>raw</strong> 表中。
