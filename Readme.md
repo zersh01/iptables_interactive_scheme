@@ -1,6 +1,7 @@
 Support lang:
 - [Русский](#Rus)
 - [English](#En)
+- [Chinese](#zh_CN)
 
 # Rus 
 ## Интерактивное описание таблиц iptables.
