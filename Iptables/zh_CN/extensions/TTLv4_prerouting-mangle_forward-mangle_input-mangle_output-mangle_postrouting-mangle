@@ -1,0 +1,12 @@
+<strong>TTL (特定于 IPv4)</strong>
+此参数用于更改 IPv4 报头中的 TTL 字段。
+TTL 字段决定了数据包在生存时间到期之前可以经过多少次跳跃（路由器）。<br><br>
+
+设置或增加 TTL 字段可能具有潜在的危险性，
+因此应不惜一切代价避免这种情况。此目标仅在 <strong>mangle</strong> 表中有效。<br>
+
+(!)切勿在离开您本地网络的数据包上设置或增加值！
+
+<ul><strong>--ttl-set value </strong> - 将 TTL 值设置为 value。
+<ul><strong>--ttl-dec value </strong> - 将 TTL 值减少 value 次。
+<ul><strong>--ttl-inc value </strong> - 将 TTL 值增加 value 次。

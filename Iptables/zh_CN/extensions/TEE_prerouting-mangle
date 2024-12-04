@@ -1,0 +1,7 @@
+TEE 目标克隆数据包并将其转发到本地网络段中的另一台机器。<br>
+换句话说，下一个节点应该是目标，或者如果需要，您必须配置下一个节点进行进一步转发。
+<ul><strong>--gateway ipaddr</strong> - 将克隆的数据包发送到指定 IP 地址可达的主机。
+使用 0.0.0.0（对于 IPv4 数据包）或 ::（IPv6）是无效的。</ul>
+要将所有进入 eth0 的流量重定向到网络层日志记录设备：
+
+<ul>-t mangle -A PREROUTING -i eth0 -j TEE --gateway 2001:db8::1</ul>

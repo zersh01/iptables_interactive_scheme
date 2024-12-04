@@ -82,3 +82,40 @@ The next example will create an entry for REJECTv4 and highlight the correspondi
 ```bash
 REJECTv4_input_forward_output
 ```
+
+# zh_CN
+
+## iptables 的交互式描述
+
+演示: https://zersh01.github.io/iptables_interactive_scheme/
+
+基本文件:
+
+- iptables.html - 主页
+- styles.css - 样式
+- iptables.svg - 图表
+- Iptables - 语言文件夹
+- start_python_http.sh - 用于快速测试的简单 HTTP 服务器
+
+您可以通过在以下路径添加翻译来发送您的本地化：Iptables/lang_name
+
+文件名指示它们所针对的消息类型：
+
+*-data - 用于工具提示
+
+*-descr - 图表下的扩展描述
+
+extensions/ 目录用于 [iptables-extensions](https://ipset.netfilter.org/iptables-extensions.man.html) 的本地化。
+
+extensions 目录中的文件应按以下方式命名：
+
+*name + '_' + '表名'（或链名）* - 在此扩展应使用的表（或链）中。
+
+例如，以下名称将为 DNAT 创建一个条目，并在 PREROUTING 和 OUTPUT 链中突出显示 nat 表：
+```
+DNAT_prerouting-nat_output-nat
+```
+下一个示例将为 REJECTv4 创建一个条目，并突出显示相应的链：
+```
+REJECTv4_input_forward_output
+```

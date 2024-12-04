@@ -1,0 +1,4 @@
+此目标允许修改 IPv4 数据包的 TOS 头中的 DSCP 位值。
+由于这是对数据包的操作，它只能用于 mangle 表。
+<ul><strong>--set-dscp value</strong> - 将 DSCP 字段设置为数值（可以是十进制或十六进制）</ul>
+<ul><strong>--set-dscp-class class</strong> - 将 DSCP 字段设置为 DiffServ 类。</ul>
