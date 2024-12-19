@@ -42,10 +42,25 @@
    <script>
 	//Автоматическое определение языка при запуске
 	window.onload = function() {
-    	    var userLang = navigator.language || navigator.userLanguage; 
-    	    userLang = userLang.substr(0, 2); // получаем первые две буквы языка
-    	    var select = document.getElementById('languageSelect');
-    	    select.value = userLang; // устанавливаем значение select в язык пользователя
+            // copied from https://stackoverflow.com/questions/1043339/javascript-for-detecting-browser-language-preference#comment91904885_25603630
+            var userLanguages = [].concat(navigator.languages, navigator.language, navigator.userLanguage, navigator.browserLanguage, navigator.systemLanguage).filter(Boolean);
+
+            var select = document.getElementById('languageSelect');
+            var supportedLanguages = [...select.options].map(o => o.value);
+
+            var selectedLanguage = "en";
+            for (const lang of userLanguages) {
+                if(supportedLanguages.includes(lang)){
+                    selectedLanguage = lang;
+                    break;
+                }
+                const langPrefix = lang.substr(0, 2);
+                if(supportedLanguages.includes(langPrefix)){
+                    selectedLanguage = langPrefix;
+                    break;
+                }
+            }
+            select.value = selectedLanguage; // устанавливаем значение select в язык пользователя
         }
 
 	//Кнопки направления трафика
