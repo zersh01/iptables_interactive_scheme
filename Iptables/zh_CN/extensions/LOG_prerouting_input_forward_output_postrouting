@@ -1,0 +1,28 @@
+启用内核日志记录以跟踪匹配的数据包<br>
+当为规则设置此选项时，Linux 内核将打印一些关于所有匹配数据包的信息（例如，大多数 IP/IPv6 头字段）<br>
+在内核日志中(可以通过 dmesg(1) 或 syslog 读取)<br>
+<br><br>
+这是一个“非终止目标”，即规则处理会继续执行下一个规则<br>
+<br><br>
+因此，如果您想要记录被拒绝的数据包，请使用两个具有相同匹配标准的独立规则，
+首先使用 LOG 目标，然后是 DROP(或 REJECT)<br>
+<br><br>
+例如：
+
+<ul><strong>
+iptables -A INPUT -j LOG --log-prefix "INPUT:DROP:" --log-level 6
+<br>
+iptables -A INPUT -j DROP
+</strong></ul>
+
+支持的选项：<br>
+
+<ul><strong> --log-level level </strong> - 日志级别，可以是（系统特定的）数字或助记符
+可能的值（按优先级降序排列）：emerg, alert, crit, error, warning, notice, info 或 debug</ul>
+<ul><strong> --log-prefix prefix </strong> - 日志消息的前缀，最长为 29 个字符，
+有助于在日志中区分消息</ul>
+<ul><strong> --log-tcp-sequence </strong> - 在日志中记录 TCP 序列号
+如果日志可供用户读取，这可能构成安全威胁</ul>
+<ul><strong> --log-tcp-options </strong> - 记录 TCP 数据包头中的选项</ul>
+<ul><strong> --log-ip-options </strong> - 记录 IP/IPv6 数据包头中的选项</ul>
+<ul><strong> --log-uid  </strong> - 记录生成数据包的进程的用户标识符</ul>
