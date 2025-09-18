@@ -1,5 +1,10 @@
 在 <strong>nat</strong> 表的 <strong>OUTPUT</strong> 链中，可以使用以下操作：<br>
 <ul><strong>DNAT</strong> - 在发送之前更改数据包的目标地址和/或端口</ul>
+例如，通过隧道或套接字封装：
+<ul><pre> iptables -t nat -D OUTPUT -d 192.168.1.1/32 -p tcp -m tcp --dport 22 -j DNAT --to-destination 127.0.0.1:2222 </pre></ul>
+或者将发送到端口80的出站连接重定向到服务器 192.168.1.1:8080：
+<ul><pre>iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to-destination 192.168.1.1:8080</pre></ul>
 <ul><strong>SNAT</strong> - 在发送之前更改数据包的源地址和/或端口</ul>
+<pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 443 -j SNAT --to-source 95.123.42.10</pre></ul>
 <ul><strong>MASQUERADE</strong> - 自动选择用于出站数据包的地址和/或端口，以隐藏真实的源地址</ul>
 <ul><strong>REDIRECT</strong> - 将数据包重定向到本地网络内的另一个地址和/或端口</ul>

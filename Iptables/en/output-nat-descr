@@ -1,5 +1,10 @@
 The following actions are available in the <strong>nat</strong> table in the <strong>OUTPUT</strong> chain:<br>
 <ul><strong>DNAT</strong> - Changes the address and/or destination port of the packet before sending</ul>
+For example, to tunnel or socket wrap:
+<ul><pre> iptables -t nat -D OUTPUT -d 192.168.1.1/32 -p tcp -m tcp --dport 22 -j DNAT --to-destination 127.0.0.1:2222 </pre></ul>
+or redirect outbound connections to port 80 to the server 192.168.1.1:8080:
+<pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to-destination 192.168.1.1:8080</pre></ul>
 <ul><strong>SNAT</strong> - Changes the address and/or port of the packet source before sending</ul>
+<pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 443 -j SNAT --to-source 95.123.42.10</pre></ul>
 <ul><strong>MASQUERADE</strong> - Automatically selects the address and/or port for outgoing packets to hide the real source address</ul>
 <ul><strong>REDIRECT</strong> - Redirects the packet to another address and/or port within the local network.</ul>

@@ -1,5 +1,10 @@
 В таблице <strong>nat</strong> цепочки <strong>OUTPUT</strong> доступны следующие действия:<br>
 <ul><strong>DNAT</strong> - Изменяет адрес и/или порт назначения пакета перед отправкой</ul>
+Например, завернуть в туннель или сокет:
+<ul><pre> iptables -t nat -D OUTPUT -d 192.168.1.1/32 -p tcp -m tcp --dport 22 -j DNAT --to-destination 127.0.0.1:2222 </pre></ul>
+или направить исходящие соединения к порту 80 на сервер 192.168.1.1:8080:
+<pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to-destination 192.168.1.1:8080</pre></ul>
 <ul><strong>SNAT</strong> - Изменяет адрес и/или порт источника пакета перед отправкой</ul>
+<pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 443 -j SNAT --to-source 95.123.42.10</pre></ul>
 <ul><strong>MASQUERADE</strong> - Автоматически выбирает адрес и/или порт для исходящих пакетов, чтобы скрыть реальный адрес источника</ul>
 <ul><strong>REDIRECT</strong> - Перенаправляет пакет на другой адрес и/или порт в пределах локальной сети.</ul>
