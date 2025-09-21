@@ -5,6 +5,10 @@
 или направить исходящие соединения к порту 80 на сервер 192.168.1.1:8080:
 <pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to-destination 192.168.1.1:8080</pre></ul>
 <ul><strong>SNAT</strong> - Изменяет адрес и/или порт источника пакета перед отправкой</ul>
-<pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 443 -j SNAT --to-source 95.123.42.10</pre></ul>
+<pre>iptables -t nat -A OUTPUT -p tcp --dport 443 -j SNAT --to-source 95.123.42.10</pre>
 <ul><strong>MASQUERADE</strong> - Автоматически выбирает адрес и/или порт для исходящих пакетов, чтобы скрыть реальный адрес источника</ul>
+<pre>iptables -t nat -A OUTPUT -o eth0 -j MASQUERADE</pre>
 <ul><strong>REDIRECT</strong> - Перенаправляет пакет на другой адрес и/или порт в пределах локальной сети.</ul>
+<pre>iptables -t nat -A OUTPUT -p tcp --dport 80 -j REDIRECT --to-ports 8080</pre>
+<ul>Логировать прохождение пакета:</ul>
+<pre>iptables -t nat -A OUTPUT -p tcp --dport 80 -j LOG --log-prefix "NAT_OUTPUT: "</pre>

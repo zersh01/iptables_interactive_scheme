@@ -5,6 +5,10 @@ For example, to tunnel or socket wrap:
 or redirect outbound connections to port 80 to the server 192.168.1.1:8080:
 <pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 80 -j DNAT --to-destination 192.168.1.1:8080</pre></ul>
 <ul><strong>SNAT</strong> - Changes the address and/or port of the packet source before sending</ul>
-<pre><ul>iptables -t nat -A OUTPUT -p tcp --dport 443 -j SNAT --to-source 95.123.42.10</pre></ul>
+<pre>iptables -t nat -A OUTPUT -p tcp --dport 443 -j SNAT --to-source 95.123.42.10</pre>
 <ul><strong>MASQUERADE</strong> - Automatically selects the address and/or port for outgoing packets to hide the real source address</ul>
+<pre>iptables -t nat -A OUTPUT -o eth0 -j MASQUERADE</pre>
 <ul><strong>REDIRECT</strong> - Redirects the packet to another address and/or port within the local network.</ul>
+<pre>iptables -t nat -A OUTPUT -p tcp --dport 80 -j REDIRECT --to-ports 8080</pre>
+<ul>Log the packet's passage:</ul>
+<pre>iptables -t nat -A OUTPUT -p tcp --dport 80 -j LOG --log-prefix "NAT_OUTPUT: "</pre>
