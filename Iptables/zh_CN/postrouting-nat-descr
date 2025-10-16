@@ -5,7 +5,9 @@ SNAT 使用示例：<br><br>
 <pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 203.0.113.10 </pre></ul>
 <ul><strong>MASQUERADE</strong> - 此操作为 SNAT 的特殊形式，用于动态更改源地址为动态 IP 地址（例如通过 DHCP 配置的地址）的数据包的源地址。当外部服务器地址未知时，MASQUERADE 使用方便。<br>
 MASQUERADE 使用示例：<br><br>
-<pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE </pre></ul>
+<pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE </pre>
+如果您的服务提供商阻止了通过 UDP 和非特权端口的 NTP，您可以指定在输出连接中使用特定范围内的随机端口：<br><br>
+<pre> iptables -t nat -A POSTROUTING -p udp -m udp --sport 123 -j MASQUERADE --to-ports 60000-61000 </pre></ul>
 <ul><strong>NETMAP</strong> - 与 PREROUTING 链中的操作类似，NETMAP 操作允许在 POSTROUTING 链之后使用特殊映射更改数据包的 IP 地址。<br>
 NETMAP 使用示例：<br><br>
 <pre> iptables -t nat -A POSTROUTING -d 172.16.0.0/24 -j NETMAP --to 192.168.0.0/24 </pre></ul>

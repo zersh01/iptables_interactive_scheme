@@ -20,3 +20,4 @@ TOS_prerouting-mangle_forward-mangle_input-mangle_output-mangle_postrouting-mang
 TPROXY_prerouting-mangle
 TRACE_prerouting-raw_output-raw
 TTLv4_prerouting-mangle_forward-mangle_input-mangle_output-mangle_postrouting-mangle
+LOG_prerouting_input_forward_output_postrouting

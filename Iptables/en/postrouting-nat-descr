@@ -7,14 +7,17 @@ of the source connection. SNAT is often used to change outgoing traffic from a p
 in order to achieve internet accessibility.<br>
 
 Example of using SNAT:<br><br>
-</pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 203.0.113.10 </pre></ul>
+<pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 203.0.113.10 </pre></ul>
 
 <ul><strong> MASQUERADE</strong> - This action is a special form of SNAT and is used to dynamically change the source
 address of packets when the sources are dynamic IP addresses (for example, configured via DHCP). MASQUERADE is convenient to use
 in cases when the external address of the nat server is unknown in advance.<br>
 
 Example of using MASQUERADE:<br><br>
-<pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE </pre></ul>
+<pre> iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE </pre>
+If your provider blocks NTP over UDP and a non-privileged port, you can specify that a random port 
+within a certain range should be used for outgoing connections:<br><br>
+<pre> iptables -t nat -A POSTROUTING -p udp -m udp --sport 123 -j MASQUERADE --to-ports 60000-61000 </pre> </ul>
 
 <ul><strong>NETMAP</strong> - As in the PREROUTING chain, the NETMAP action allows you to change the IP addresses of packets
 for networks using special cards, but after passing through the POSTROUTING chain.<br>
